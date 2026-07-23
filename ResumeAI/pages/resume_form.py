@@ -36,7 +36,19 @@ def resume_form() -> rx.Component:
                 width="400px",
                 height="120px",
             ),
-
+            rx.input(
+                placeholder="Education (e.g. B.Tech in Computer Science)",
+                value=ResumeState.education,
+                on_change=ResumeState.set_education,
+                width="400px",
+            ),
+            rx.text_area(
+                placeholder="Skills (comma separated)\nExample: Python, React, SQL",
+                value=ResumeState.skills,
+                on_change=ResumeState.set_skills,
+                width="400px",
+                height="100px",
+            ),
             rx.button(
                 "Generate Resume",
                 color_scheme="purple",

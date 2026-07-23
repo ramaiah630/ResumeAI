@@ -47,6 +47,34 @@ rx.text(
     ),
     size="2",
 ),
+rx.divider(),
+
+rx.heading(
+    "Education",
+    size="3",
+),
+
+rx.text(
+    rx.cond(
+        ResumeState.education != "",
+        ResumeState.education,
+        "Bachelor of Technology",
+    ),
+),
+rx.divider(),
+
+rx.heading(
+    "Skills",
+    size="3",
+),
+
+rx.text(
+    rx.cond(
+        ResumeState.skills != "",
+        ResumeState.skills,
+        "Python, React, SQL",
+    ),
+),
                     spacing="1",
                     align="start",
                 ),
