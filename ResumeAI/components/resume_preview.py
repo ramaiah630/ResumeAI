@@ -1,5 +1,5 @@
 import reflex as rx
-
+from ..resume_state import ResumeState
 
 def resume_preview() -> rx.Component:
     return rx.card(
@@ -7,11 +7,17 @@ def resume_preview() -> rx.Component:
             rx.hstack(
                 rx.avatar(name="John Smith"),
                 rx.vstack(
-                    rx.heading("John Smith", size="4"),
+                    rx.heading(
+                        rx.cond(
+                            ResumeState.full_name != "",
+                            ResumeState.full_name,
+                            "John Smith",
+                        ),
+                        size="4",
+                    ),
                     rx.text(
-                        "Software Engineer",
-                        color_scheme="gray",
-                        size="2",
+                        ResumeState.email,
+                        color_scheme="gray"
                     ),
                     spacing="1",
                     align="start",
