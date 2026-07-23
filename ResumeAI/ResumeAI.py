@@ -1,44 +1,35 @@
 import reflex as rx
+
 from .components.navbar import navbar
+from .components.hero import hero
+from .components.feature_cards import feature_cards
+from .pages.resume_form import resume_form
 
 class State(rx.State):
     """Application state."""
     pass
 
+
 def index() -> rx.Component:
     return rx.box(
         navbar(),
-        rx.center(
-            rx.vstack(
-                rx.heading(
-                    "Build AI-Powered Professional Resumes",
-                    size="9",
-                    text_align="center",
-                ),
-                rx.text(
-                    "Create ATS-friendly resumes in minutes using AI.",
-                    size="5",
-                    text_align="center",
-                ),
-                rx.hstack(
-                    rx.button(
-                        "Create Resume",
-                        size="3",
-                    ),
-                    rx.button(
-                        "View Templates",
-                        variant="outline",
-                        size="3",
-                    ),
-                    spacing="4",
-                ),
-                spacing="6",
-                align="center",
-            ),
-            height="85vh",
-        ),
+        hero(),
+        feature_cards(),
+        background="""
+        linear-gradient(
+            180deg,
+            #0f172a 0%,
+            #111827 40%,
+            #1e1b4b 100%
+        )
+        """,
+        min_height="100vh",
     )
 
-
 app = rx.App()
+
 app.add_page(index)
+app.add_page(
+    resume_form,
+    route="/resume",
+)
