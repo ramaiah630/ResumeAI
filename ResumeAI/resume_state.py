@@ -8,6 +8,10 @@ class ResumeState(rx.State):
     summary: str = "Passionate software engineer..."
     education: str = "B.Tech in Computer Science"
     skills: str = "Python, React, SQL, Git"
+    company: str = "OpenAI"
+    job_title: str = "AI Developer"
+    duration: str = "Jan 2026 - Present"
+    experience_description: str = "Built AI-powered applications using Python, Reflex, and modern web technologies."
 
 
     def set_full_name(self, value: str):
@@ -27,3 +31,15 @@ class ResumeState(rx.State):
 
     def set_skills(self, value: str):
         self.skills = value
+
+    def set_company(self, value: str):
+        self.company = value
+
+    def set_job_title(self, value: str):
+        self.job_title = value
+
+    def set_duration(self, value: str):
+        self.duration = value
+
+    def set_experience_description(self, value: str):
+        self.experience_description = value

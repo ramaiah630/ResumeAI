@@ -49,6 +49,39 @@ def resume_form() -> rx.Component:
                 width="400px",
                 height="100px",
             ),
+            rx.heading(
+                "Experience",
+                size="4",
+            ),
+
+            rx.input(
+                placeholder="Company Name",
+                value=ResumeState.company,
+                on_change=ResumeState.set_company,
+                width="400px",
+            ),
+
+            rx.input(
+                placeholder="Job Title",
+                value=ResumeState.job_title,
+                on_change=ResumeState.set_job_title,
+                width="400px",
+            ),
+
+            rx.input(
+                placeholder="Duration (e.g. Jan 2025 - Present)",
+                value=ResumeState.duration,
+                on_change=ResumeState.set_duration,
+                width="400px",
+            ),
+
+            rx.text_area(
+                placeholder="Describe your work...",
+                value=ResumeState.experience_description,
+                on_change=ResumeState.set_experience_description,
+                width="400px",
+                height="120px",
+            ),
             rx.button(
                 "Generate Resume",
                 color_scheme="purple",

@@ -75,6 +75,46 @@ rx.text(
         "Python, React, SQL",
     ),
 ),
+rx.divider(),
+
+rx.heading(
+    "Experience",
+    size="3",
+),
+
+rx.text(
+    rx.cond(
+        ResumeState.job_title != "",
+        ResumeState.job_title,
+        "Software Engineer",
+    ),
+    font_weight="bold",
+),
+
+rx.text(
+    rx.cond(
+        ResumeState.company != "",
+        ResumeState.company,
+        "ABC Technologies",
+    ),
+),
+
+rx.text(
+    rx.cond(
+        ResumeState.duration != "",
+        ResumeState.duration,
+        "Jan 2025 - Present",
+    ),
+    color="gray",
+),
+
+rx.text(
+    rx.cond(
+        ResumeState.experience_description != "",
+        ResumeState.experience_description,
+        "Worked on AI-powered web applications and automation tools.",
+    ),
+),
                     spacing="1",
                     align="start",
                 ),
