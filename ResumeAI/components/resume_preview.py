@@ -15,10 +15,38 @@ def resume_preview() -> rx.Component:
                         ),
                         size="4",
                     ),
-                    rx.text(
-                        ResumeState.email,
-                        color_scheme="gray"
+                   rx.text(
+                        rx.cond(
+                            ResumeState.email != "",
+                            ResumeState.email,
+                            "john.smith@email.com",
+                        ),
+                        color_scheme="gray",
+                        size="2",
                     ),
+                    rx.text(
+                        rx.cond(
+                            ResumeState.phone != "",
+                            ResumeState.phone,
+                            "+91 9876543210",
+                        ),
+                        color_scheme="gray",
+                        size="2",
+                    ),
+                    rx.divider(),
+
+                    rx.heading(
+                    "Professional Summary",
+                    size="3",
+),
+rx.text(
+    rx.cond(
+        ResumeState.summary != "",
+        ResumeState.summary,
+        "Passionate software engineer with strong problem-solving skills.",
+    ),
+    size="2",
+),
                     spacing="1",
                     align="start",
                 ),

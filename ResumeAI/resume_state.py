@@ -3,9 +3,9 @@ import reflex as rx
 
 class ResumeState(rx.State):
     full_name: str = "Dhasaradha Ramaiah"
-    email: str = ""
-    phone: str = ""
-    summary: str = ""
+    email: str = "ramaiah@example.com"
+    phone: str = "7207805637"
+    summary: str = "Passionate software engineer..."
 
     def set_full_name(self, value: str):
         self.full_name = value
