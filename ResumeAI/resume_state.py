@@ -24,6 +24,7 @@ class ResumeState(rx.State):
     # ==========================
     skills: str = "Python, React, SQL, Git"
 
+
     # ==========================
     # Experience
     # ==========================
@@ -56,6 +57,43 @@ class ResumeState(rx.State):
             if skill.strip()
         ]
 
+    @rx.var
+    def completed_sections(self) -> int:
+        count = 0
+
+        if self.full_name.strip():
+            count += 1
+
+        if self.email.strip():
+            count += 1
+
+        if self.phone.strip():
+            count += 1
+
+        if self.summary.strip():
+            count += 1
+
+        if self.education.strip():
+            count += 1
+
+        if self.skills.strip():
+            count += 1
+
+        if self.company.strip():
+            count += 1
+
+        if self.project_title.strip():
+            count += 1
+
+        return count
+
+
+    @rx.var
+    def completion_percentage(self) -> int:
+     total_sections = 8
+     return int((self.completed_sections / total_sections) * 100)
+   
+   
     # ==========================
     # Setter Methods
     # ==========================

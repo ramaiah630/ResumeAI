@@ -1,13 +1,18 @@
 import reflex as rx
 from ..resume_state import ResumeState
 
+# ==========================
+# Constants
+# ==========================
+FORM_WIDTH = "400px"
+
 
 def form_heading(title: str) -> rx.Component:
     """Reusable section heading."""
     return rx.heading(
         title,
         size="4",
-        width="400px",
+        width=FORM_WIDTH,
         align="left",
     )
 
@@ -25,6 +30,47 @@ def resume_form() -> rx.Component:
             ),
 
             # ==========================
+            # Resume Completion Card
+        rx.box(
+    rx.vstack(
+        rx.heading(
+            "Resume Completion",
+            size="4",
+        ),
+
+        rx.progress(
+            ResumeState.completion_percentage,
+            max=100,
+            width="100%",
+        ),
+
+        rx.hstack(
+            rx.text("Completed Sections:"),
+            rx.text(ResumeState.completed_sections),
+            rx.text("/"),
+            rx.text("8"),
+        ),
+
+        rx.hstack(
+            rx.text("Completion:"),
+            rx.text(ResumeState.completion_percentage),
+            rx.text("%"),
+            spacing="2",
+        ),
+
+        spacing="3",
+        width="100%",
+        align="start",
+    ),
+
+    width=FORM_WIDTH,
+    padding="1em",
+    border="1px solid",
+    border_color="gray.300",
+    border_radius="12px",
+),
+
+            # ==========================
             # Personal Information
             # ==========================
             form_heading("Personal Information"),
@@ -33,21 +79,21 @@ def resume_form() -> rx.Component:
                 placeholder="Full Name",
                 value=ResumeState.full_name,
                 on_change=ResumeState.set_full_name,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.input(
-                placeholder="Email",
+                placeholder="Email Address",
                 value=ResumeState.email,
                 on_change=ResumeState.set_email,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.input(
                 placeholder="Phone Number",
                 value=ResumeState.phone,
                 on_change=ResumeState.set_phone,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             # ==========================
@@ -59,7 +105,7 @@ def resume_form() -> rx.Component:
                 placeholder="Write a short professional summary...",
                 value=ResumeState.summary,
                 on_change=ResumeState.set_summary,
-                width="400px",
+                width=FORM_WIDTH,
                 height="120px",
             ),
 
@@ -72,7 +118,7 @@ def resume_form() -> rx.Component:
                 placeholder="B.Tech in Computer Science",
                 value=ResumeState.education,
                 on_change=ResumeState.set_education,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             # ==========================
@@ -84,7 +130,7 @@ def resume_form() -> rx.Component:
                 placeholder="Python, React, SQL, Git",
                 value=ResumeState.skills,
                 on_change=ResumeState.set_skills,
-                width="400px",
+                width=FORM_WIDTH,
                 height="100px",
             ),
 
@@ -97,73 +143,79 @@ def resume_form() -> rx.Component:
                 placeholder="Company Name",
                 value=ResumeState.company,
                 on_change=ResumeState.set_company,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.input(
                 placeholder="Job Title",
                 value=ResumeState.job_title,
                 on_change=ResumeState.set_job_title,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.input(
                 placeholder="Duration (e.g. Jan 2025 - Present)",
                 value=ResumeState.duration,
                 on_change=ResumeState.set_duration,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.text_area(
                 placeholder="Describe your responsibilities and achievements...",
                 value=ResumeState.experience_description,
                 on_change=ResumeState.set_experience_description,
-                width="400px",
+                width=FORM_WIDTH,
                 height="120px",
             ),
 
+            # ==========================
+            # Projects
+            # ==========================
             form_heading("Projects"),
 
             rx.input(
                 placeholder="Project Title",
                 value=ResumeState.project_title,
                 on_change=ResumeState.set_project_title,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.input(
                 placeholder="Technologies Used",
                 value=ResumeState.project_technologies,
                 on_change=ResumeState.set_project_technologies,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.input(
                 placeholder="GitHub Repository",
                 value=ResumeState.project_github,
                 on_change=ResumeState.set_project_github,
-                width="400px",
+                width=FORM_WIDTH,
             ),
 
             rx.text_area(
                 placeholder="Describe the project...",
                 value=ResumeState.project_description,
                 on_change=ResumeState.set_project_description,
-                width="400px",
+                width=FORM_WIDTH,
                 height="120px",
             ),
 
             # ==========================
-            # Generate Button
+            # Generate Resume Button
             # ==========================
             rx.button(
                 "Generate Resume",
                 color_scheme="purple",
-                width="400px",
+                width=FORM_WIDTH,
+                size="3",
             ),
 
-            spacing="5",
+            spacing="6",
             padding_y="2em",
+            align="center",
         ),
         min_height="100vh",
+        padding="2em",
     )
