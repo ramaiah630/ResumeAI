@@ -156,6 +156,43 @@ def resume_preview() -> rx.Component:
                 ),
 
                 # ==========================
+                # Certifications
+                # ==========================
+                rx.cond(
+                    ResumeState.certification_name != "",
+                    rx.vstack(
+                        section_heading("Certifications"),
+
+                        rx.text(
+                            ResumeState.certification_name,
+                            font_weight="bold",
+                        ),
+
+                        preview_text(
+                            ResumeState.certification_organization,
+                            "Issuing Organization",
+                        ),
+
+                        preview_text(
+                            ResumeState.certification_issue_date,
+                            "Issue Date",
+                        ),
+
+                        rx.cond(
+                            ResumeState.certification_credential_id != "",
+                            rx.text(
+                                f"Credential ID: {ResumeState.certification_credential_id}",
+                                color="gray",
+                            ),
+                        ),
+
+                        align="start",
+                        spacing="2",
+                        width="100%",
+                    ),
+                ),
+
+                # ==========================
                 # ATS Score
                 # ==========================
                 section_heading("ATS Score"),

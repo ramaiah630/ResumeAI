@@ -39,11 +39,21 @@ class ResumeState(rx.State):
     # ==========================
     # Projects
     # ==========================
+
     project_title: str = "ResumeAI"
     project_technologies: str = "Python, Reflex, Gemini AI"
     project_github: str = "https://github.com/yourusername/resumeai"
     project_description: str = "An AI-powered resume builder with live preview, ATS score, and PDF export."
 
+    # ==========================
+    # certifications
+    # ==========================
+
+    certification_name: str = ""
+    certification_organization: str = ""
+    certification_issue_date: str = ""
+    certification_credential_id: str = ""
+  
 
     # ==========================
     # Computed Variables
@@ -85,14 +95,17 @@ class ResumeState(rx.State):
         if self.project_title.strip():
             count += 1
 
+        if self.certification_name.strip():
+            count += 1
+            
         return count
 
 
     @rx.var
     def completion_percentage(self) -> int:
-     total_sections = 8
+     total_sections = 9
      return int((self.completed_sections / total_sections) * 100)
-   
+    
    
     # ==========================
     # Setter Methods
@@ -138,3 +151,15 @@ class ResumeState(rx.State):
 
     def set_project_description(self, value: str):
         self.project_description = value
+
+    def set_certification_name(self, value: str):
+        self.certification_name = value
+
+    def set_certification_organization(self, value: str):
+        self.certification_organization = value
+
+    def set_certification_issue_date(self, value: str):
+        self.certification_issue_date = value
+
+    def set_certification_credential_id(self, value: str):
+        self.certification_credential_id = value

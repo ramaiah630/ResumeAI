@@ -48,7 +48,7 @@ def resume_form() -> rx.Component:
             rx.text("Completed Sections:"),
             rx.text(ResumeState.completed_sections),
             rx.text("/"),
-            rx.text("8"),
+            rx.text("9"),
         ),
 
         rx.hstack(
@@ -201,6 +201,39 @@ def resume_form() -> rx.Component:
                 width=FORM_WIDTH,
                 height="120px",
             ),
+
+            # ==========================
+            # Certifications
+            # ==========================
+            form_heading("Certifications"),
+
+rx.input(
+    placeholder="Certification Name",
+    value=ResumeState.certification_name,
+    on_change=ResumeState.set_certification_name,
+    width=FORM_WIDTH,
+),
+
+rx.input(
+    placeholder="Issuing Organization",
+    value=ResumeState.certification_organization,
+    on_change=ResumeState.set_certification_organization,
+    width=FORM_WIDTH,
+),
+
+rx.input(
+    placeholder="Issue Date",
+    value=ResumeState.certification_issue_date,
+    on_change=ResumeState.set_certification_issue_date,
+    width=FORM_WIDTH,
+),
+
+rx.input(
+    placeholder="Credential ID (Optional)",
+    value=ResumeState.certification_credential_id,
+    on_change=ResumeState.set_certification_credential_id,
+    width=FORM_WIDTH,
+),
 
             # ==========================
             # Generate Resume Button
