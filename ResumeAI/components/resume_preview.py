@@ -1,151 +1,190 @@
 import reflex as rx
 from ..resume_state import ResumeState
 
+
+def section_heading(title: str) -> rx.Component:
+    """Reusable section heading."""
+    return rx.heading(
+        title,
+        size="4",
+        margin_top="20px",
+        margin_bottom="10px",
+    )
+
+
+def preview_text(value, placeholder) -> rx.Component:
+    """Show placeholder when value is empty."""
+    return rx.text(
+        rx.cond(
+            value != "",
+            value,
+            placeholder,
+        )
+    )
+
+
 def resume_preview() -> rx.Component:
     return rx.card(
-        rx.vstack(
-            rx.hstack(
-                rx.avatar(name="John Smith"),
-                rx.vstack(
-                    rx.heading(
-                        rx.cond(
-                            ResumeState.full_name != "",
-                            ResumeState.full_name,
-                            "John Smith",
-                        ),
-                        size="4",
+        rx.box(
+            rx.vstack(
+
+                # ==========================
+                # Header
+                # ==========================
+                rx.heading(
+                    rx.cond(
+                        ResumeState.full_name != "",
+                        ResumeState.full_name,
+                        "Your Name",
                     ),
-                   rx.text(
-                        rx.cond(
-                            ResumeState.email != "",
-                            ResumeState.email,
-                            "john.smith@email.com",
-                        ),
-                        color_scheme="gray",
-                        size="2",
-                    ),
-                    rx.text(
-                        rx.cond(
-                            ResumeState.phone != "",
-                            ResumeState.phone,
-                            "+91 9876543210",
-                        ),
-                        color_scheme="gray",
-                        size="2",
-                    ),
-                    rx.divider(),
-
-                    rx.heading(
-                    "Professional Summary",
-                    size="3",
-),
-rx.text(
-    rx.cond(
-        ResumeState.summary != "",
-        ResumeState.summary,
-        "Passionate software engineer with strong problem-solving skills.",
-    ),
-    size="2",
-),
-rx.divider(),
-
-rx.heading(
-    "Education",
-    size="3",
-),
-
-rx.text(
-    rx.cond(
-        ResumeState.education != "",
-        ResumeState.education,
-        "Bachelor of Technology",
-    ),
-),
-rx.divider(),
-
-rx.heading(
-    "Skills",
-    size="3",
-),
-
-rx.text(
-    rx.cond(
-        ResumeState.skills != "",
-        ResumeState.skills,
-        "Python, React, SQL",
-    ),
-),
-rx.divider(),
-
-rx.heading(
-    "Experience",
-    size="3",
-),
-
-rx.text(
-    rx.cond(
-        ResumeState.job_title != "",
-        ResumeState.job_title,
-        "Software Engineer",
-    ),
-    font_weight="bold",
-),
-
-rx.text(
-    rx.cond(
-        ResumeState.company != "",
-        ResumeState.company,
-        "ABC Technologies",
-    ),
-),
-
-rx.text(
-    rx.cond(
-        ResumeState.duration != "",
-        ResumeState.duration,
-        "Jan 2025 - Present",
-    ),
-    color="gray",
-),
-
-rx.text(
-    rx.cond(
-        ResumeState.experience_description != "",
-        ResumeState.experience_description,
-        "Worked on AI-powered web applications and automation tools.",
-    ),
-),
-                    spacing="1",
-                    align="start",
+                    size="8",
+                    text_align="center",
+                    width="100%",
                 ),
+
+                rx.hstack(
+                    preview_text(
+                        ResumeState.email,
+                        "email@example.com",
+                    ),
+
+                    rx.spacer(),
+
+                    preview_text(
+                        ResumeState.phone,
+                        "+91 XXXXX XXXXX",
+                    ),
+
+                    width="100%",
+                ),
+
+                # ==========================
+                # Summary
+                # ==========================
+                section_heading("Professional Summary"),
+
+                preview_text(
+                    ResumeState.summary,
+                    "Write a short professional summary...",
+                ),
+
+                # ==========================
+                # Education
+                # ==========================
+                section_heading("Education"),
+
+                preview_text(
+                    ResumeState.education,
+                    "Bachelor of Technology",
+                ),
+
+                # ==========================
+                # Skills
+                # ==========================
+                section_heading("Skills"),
+
+                rx.flex(
+                    rx.foreach(
+                        ResumeState.skills_list,
+                        lambda skill: rx.badge(
+                            skill,
+                            variant="soft",
+                            radius="full",
+                        ),
+                    ),
+                    wrap="wrap",
+                    spacing="2",
+                ),
+
+                # ==========================
+                # Experience
+                # ==========================
+                section_heading("Experience"),
+
+                rx.text(
+                    rx.cond(
+                        ResumeState.job_title != "",
+                        ResumeState.job_title,
+                        "Software Engineer",
+                    ),
+                    font_weight="bold",
+                ),
+
+                preview_text(
+                    ResumeState.company,
+                    "ABC Technologies",
+                ),
+
+                rx.text(
+                    rx.cond(
+                        ResumeState.duration != "",
+                        ResumeState.duration,
+                        "Jan 2025 - Present",
+                    ),
+                    color="gray",
+                ),
+
+                preview_text(
+                    ResumeState.experience_description,
+                    "Worked on AI-powered web applications and automation tools.",
+                ),
+
+                section_heading("Projects"),
+
+                rx.text(
+                    rx.cond(
+                        ResumeState.project_title != "",
+                        ResumeState.project_title,
+                        "AI Resume Builder",
+                    ),
+                    font_weight="bold",
+                ),
+
+                preview_text(
+                    ResumeState.project_technologies,
+                    "Python • Reflex • Gemini AI",
+                ),
+
+                preview_text(
+                    ResumeState.project_github,
+                    "https://github.com/username/resumeai",
+                ),
+
+                preview_text(
+                    ResumeState.project_description,
+                    "An AI-powered resume builder with live preview and PDF export.",
+                ),
+
+                # ==========================
+                # ATS Score
+                # ==========================
+                section_heading("ATS Score"),
+
+                rx.progress(
+                    value=98,
+                    width="100%",
+                ),
+
+                rx.text(
+                    "98% Match",
+                    color_scheme="green",
+                    font_weight="bold",
+                ),
+
+                spacing="5",
                 width="100%",
             ),
 
-            rx.divider(),
-
-            rx.heading("Skills", size="3"),
-
-            rx.badge("Python"),
-            rx.badge("React"),
-            rx.badge("SQL"),
-            rx.badge("Git"),
-            rx.badge("AI"),
-
-            rx.divider(),
-
-            rx.text("ATS Score", weight="bold"),
-
-            rx.progress(value=98),
-
-            rx.text(
-                "98% Match",
-                color_scheme="green",
-                weight="bold",
-            ),
-
-            spacing="4",
-            width="100%",
+            width="210mm",
+            min_height="297mm",
+            bg="white",
+            color="black",
+            padding="40px",
+            border_radius="8px",
+            box_shadow="lg",
+            overflow="hidden",
         ),
-        width="360px",
-        padding="2em",
+
+        width="100%",
+        max_width="900px",
     )
