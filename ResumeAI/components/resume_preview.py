@@ -221,7 +221,6 @@ def resume_preview() -> rx.Component:
                 ),
             ),       
 
-                # rx.text(f"Languages: {ResumeState.languages}"),
 
                 # ==========================
                 # ATS Score
@@ -229,12 +228,13 @@ def resume_preview() -> rx.Component:
                 section_heading("ATS Score"),
 
                 rx.progress(
-                    value=98,
+                    value=ResumeState.ats_score,
                     width="100%",
                 ),
 
                 rx.text(
-                    "98% Match",
+                    ResumeState.ats_score,
+                    " % Match",
                     color_scheme="green",
                     font_weight="bold",
                 ),

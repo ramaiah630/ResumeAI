@@ -122,7 +122,44 @@ class ResumeState(rx.State):
         if language.strip()
     ]
     
-   
+
+    @rx.var
+    def ats_score(self) -> int:
+        score = 0
+
+        if self.full_name.strip():
+            score += 10
+
+        if self.email.strip():
+            score += 10
+
+        if self.phone.strip():
+            score += 10
+
+        if self.summary.strip():
+            score += 15
+
+        if self.education.strip():
+            score += 10
+
+        if self.skills.strip():
+            score += 15
+
+        if self.company.strip():
+            score += 10
+
+        if self.project_title.strip():
+            score += 10
+
+        if self.certification_name.strip():
+            score += 5
+
+        if self.languages.strip():
+            score += 5
+
+        return score
+
+    
     # ==========================
     # Setter Methods
     # ==========================
