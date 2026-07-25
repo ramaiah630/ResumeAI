@@ -53,6 +53,12 @@ class ResumeState(rx.State):
     certification_organization: str = ""
     certification_issue_date: str = ""
     certification_credential_id: str = ""
+
+    # ==========================
+    # Languages
+    # ==========================
+
+    languages: str = ""
   
 
     # ==========================
@@ -97,14 +103,26 @@ class ResumeState(rx.State):
 
         if self.certification_name.strip():
             count += 1
-            
+
+        if self.languages.strip():
+            count += 1   
+
         return count
 
 
     @rx.var
     def completion_percentage(self) -> int:
-     total_sections = 9
+     total_sections = 10
      return int((self.completed_sections / total_sections) * 100)
+
+
+    @rx.var
+    def languages_list(self) -> list[str]:
+     return [
+        language.strip()
+        for language in self.languages.split(",")
+        if language.strip()
+    ]
     
    
     # ==========================
@@ -163,3 +181,6 @@ class ResumeState(rx.State):
 
     def set_certification_credential_id(self, value: str):
         self.certification_credential_id = value
+
+    def set_languages(self, value: str):
+        self.languages = value

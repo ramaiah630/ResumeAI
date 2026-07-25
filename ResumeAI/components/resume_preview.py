@@ -192,6 +192,37 @@ def resume_preview() -> rx.Component:
                     ),
                 ),
 
+
+                # ==========================
+                # Languages
+                # ==========================
+
+                rx.cond(
+                    ResumeState.languages != "",
+                        rx.vstack(
+                            section_heading("Languages"),
+
+                        rx.flex(
+                            rx.foreach(
+                                ResumeState.languages_list,
+                                lambda language: rx.badge(
+                                language,
+                                variant="soft",
+                                radius="full",
+                            ),
+                        ),
+                        wrap="wrap",
+                        spacing="2",
+                    ),
+
+                        align="start",
+                        spacing="2",
+                        width="100%",
+                ),
+            ),       
+
+                # rx.text(f"Languages: {ResumeState.languages}"),
+
                 # ==========================
                 # ATS Score
                 # ==========================
