@@ -1,4 +1,5 @@
 import reflex as rx
+from .template_selector import template_selector
 from .resume_preview import resume_preview
 
 def hero() -> rx.Component:
@@ -41,6 +42,7 @@ def hero() -> rx.Component:
                 width="50%",
             ),
 
+            template_selector(),
             resume_preview(),
 
             spacing="9",

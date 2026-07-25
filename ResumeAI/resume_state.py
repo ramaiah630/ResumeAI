@@ -57,6 +57,12 @@ class ResumeState(rx.State):
     # ==========================
 
     languages: str = ""
+
+    # ==========================
+    # Resume Template
+    # ==========================
+
+    selected_template: str = "classic"
   
 
     # ==========================
@@ -244,6 +250,9 @@ class ResumeState(rx.State):
     def set_languages(self, value: str):
         self.languages = value
 
+    def set_selected_template(self, value: str):
+        self.selected_template = value
+
     def export_pdf(self):
         """Generate a PDF from the current resume data."""
 
@@ -279,3 +288,5 @@ class ResumeState(rx.State):
             f"{self.skills}. Passionate about learning new technologies "
             "and contributing effectively to a dynamic organization."
         )
+
+    
