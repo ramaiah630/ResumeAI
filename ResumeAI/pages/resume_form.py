@@ -254,10 +254,11 @@ def resume_form() -> rx.Component:
             # Generate Resume Button
             # ==========================
             rx.button(
-                "Generate Resume",
-                color_scheme="purple",
-                width=FORM_WIDTH,
-                size="3",
+               "Generate Resume",
+               on_click=ResumeState.export_pdf,
+               color_scheme="purple",
+               width=FORM_WIDTH,
+               size="3",
             ),
 
             spacing="6",

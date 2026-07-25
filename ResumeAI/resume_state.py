@@ -1,5 +1,6 @@
 import reflex as rx
-
+from ResumeAI.pdf_generator import generate_resume_pdf
+import os
 
 class ResumeState(rx.State):
     # ==========================
@@ -181,3 +182,32 @@ class ResumeState(rx.State):
 
     def set_languages(self, value: str):
         self.languages = value
+
+    def export_pdf(self):
+        """Generate a PDF from the current resume data."""
+
+        resume_data = {
+        "full_name": self.full_name,
+        "email": self.email,
+        "phone": self.phone,
+        "summary": self.summary,
+        "education": self.education,
+        "skills": self.skills,
+        "company": self.company,
+        "job_title": self.job_title,
+        "duration": self.duration,
+        "experience_description": self.experience_description,
+        "project_title": self.project_title,
+        "project_technologies": self.project_technologies,
+        "project_description": self.project_description,
+        "project_github": self.project_github,
+        "certification_name": self.certification_name,
+        "certification_organization": self.certification_organization,
+        "certification_issue_date": self.certification_issue_date,
+        "certification_credential_id": self.certification_credential_id,
+        "languages": self.languages,
+        }
+
+        generate_resume_pdf(resume_data)
+
+        print("PDF generated successfully!")
