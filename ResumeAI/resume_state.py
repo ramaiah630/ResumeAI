@@ -5,45 +5,42 @@ class ResumeState(rx.State):
     # ==========================
     # Personal Information
     # ==========================
-    full_name: str = "Dhasaradha Ramaiah"
-    email: str = "ramaiah@example.com"
-    phone: str = "7207805637"
+    full_name: str = ""
+    email: str = ""
+    phone: str = ""
 
     # ==========================
     # Professional Summary
     # ==========================
-    summary: str = "Passionate software engineer..."
+    summary: str = ""
 
     # ==========================
     # Education
     # ==========================
-    education: str = "B.Tech in Computer Science"
+    education: str = ""
 
     # ==========================
     # Skills
     # ==========================
-    skills: str = "Python, React, SQL, Git"
+    skills: str = ""
 
 
     # ==========================
     # Experience
     # ==========================
-    company: str = "OpenAI"
-    job_title: str = "AI Developer"
-    duration: str = "Jan 2026 - Present"
-    experience_description: str = (
-        "Built AI-powered applications using Python, Reflex, "
-        "and modern web technologies."
-    )
+    company: str = ""
+    job_title: str = ""
+    duration: str = ""
+    experience_description: str = ""
 
     # ==========================
     # Projects
     # ==========================
 
-    project_title: str = "ResumeAI"
-    project_technologies: str = "Python, Reflex, Gemini AI"
-    project_github: str = "https://github.com/yourusername/resumeai"
-    project_description: str = "An AI-powered resume builder with live preview, ATS score, and PDF export."
+    project_title: str = ""
+    project_technologies: str = ""
+    project_github: str = ""
+    project_description: str = ""
 
     # ==========================
     # certifications
