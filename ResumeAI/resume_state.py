@@ -159,6 +159,30 @@ class ResumeState(rx.State):
 
         return score
 
+    @rx.var
+    def ats_suggestions(self) -> list[str]:
+        suggestions = []
+
+        if not self.summary.strip():
+           suggestions.append("Add a professional summary.")
+
+        if len(self.skills_list) < 5:
+           suggestions.append("Include at least 5 relevant skills.")
+
+        if not self.company.strip():
+           suggestions.append("Add work experience.")
+
+        if not self.project_title.strip():
+           suggestions.append("Add at least one project.")
+
+        if not self.certification_name.strip():
+           suggestions.append("Add certifications to strengthen your resume.")
+
+        if not self.languages.strip():
+           suggestions.append("Include the languages you know.")
+
+        return suggestions
+
     
     # ==========================
     # Setter Methods

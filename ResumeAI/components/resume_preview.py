@@ -239,6 +239,48 @@ def resume_preview() -> rx.Component:
                     font_weight="bold",
                 ),
 
+                # ==========================
+                # ATS Suggestions
+                # ==========================
+                section_heading("ATS Suggestions"),
+
+                rx.vstack(
+
+                    rx.cond(
+                        ResumeState.summary == "",
+                        rx.text("• Add a professional summary.", color="orange"),
+                    ),
+
+                    rx.cond(
+                        ResumeState.skills == "",
+                        rx.text("• Add your skills.", color="orange"),
+                    ),
+
+                    rx.cond(
+                        ResumeState.company == "",
+                        rx.text("• Add work experience.", color="orange"),
+                    ),
+
+                    rx.cond(
+                        ResumeState.project_title == "",
+                        rx.text("• Add at least one project.", color="orange"),
+                    ),
+
+                    rx.cond(
+                        ResumeState.certification_name == "",
+                        rx.text("• Add certifications.", color="orange"),
+                    ),
+
+                    rx.cond(
+                        ResumeState.languages == "",
+                        rx.text("• Add languages you know.", color="orange"),
+                    ),
+
+                    align="start",
+                    spacing="2",
+                    width="100%",
+                ),
+
                 spacing="5",
                 width="100%",
             ),
