@@ -211,3 +211,10 @@ class ResumeState(rx.State):
         generate_resume_pdf(resume_data)
 
         print("PDF generated successfully!")
+
+    def generate_ai_summary(self):
+        self.summary = (
+            f"Motivated {self.education} graduate with skills in "
+            f"{self.skills}. Passionate about learning new technologies "
+            "and contributing effectively to a dynamic organization."
+        )

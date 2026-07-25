@@ -109,6 +109,13 @@ def resume_form() -> rx.Component:
                 height="120px",
             ),
 
+            rx.button(
+                "✨ Generate AI Summary",
+                on_click=ResumeState.generate_ai_summary,
+                color_scheme="green",
+                width="100%",
+            ),
+
             # ==========================
             # Education
             # ==========================
