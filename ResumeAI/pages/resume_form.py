@@ -267,6 +267,27 @@ def resume_form() -> rx.Component:
                width=FORM_WIDTH,
                size="3",
             ),
+            rx.button(
+               "💾 Save Resume",
+               on_click=ResumeState.save_resume,
+               color_scheme="blue",
+               width=FORM_WIDTH,
+               size="3",
+            ),
+            rx.button(
+               "📂 Load Resume",
+               on_click=ResumeState.load_resume,
+               color_scheme="orange",
+               width=FORM_WIDTH,
+               size="3",
+            ),
+            rx.button(
+               "🆕 New Resume",
+               on_click=ResumeState.reset_resume,
+               color_scheme="red",
+               width=FORM_WIDTH,
+               size="3",
+            ),
 
             spacing="6",
             padding_y="2em",

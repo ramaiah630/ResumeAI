@@ -1,6 +1,8 @@
 import reflex as rx
-from ResumeAI.pdf_generator import generate_resume_pdf
+from ResumeAI.utils.pdf_generator import generate_resume_pdf
+from ResumeAI.utils.docx_generator import generate_resume_docx
 import os
+import json
 
 class ResumeState(rx.State):
     # ==========================
@@ -280,7 +282,38 @@ class ResumeState(rx.State):
 
         generate_resume_pdf(resume_data)
 
-        print("PDF generated successfully!")
+        return rx.toast.success("PDF generated successfully!")
+
+
+    def export_docx(self):
+        """Generate a DOCX from the current resume data."""
+
+        resume_data = {
+            "full_name": self.full_name,
+            "email": self.email,
+            "phone": self.phone,
+            "summary": self.summary,
+            "education": self.education,
+            "skills": self.skills,
+            "company": self.company,
+            "job_title": self.job_title,
+            "duration": self.duration,
+            "experience_description": self.experience_description,
+            "project_title": self.project_title,
+            "project_technologies": self.project_technologies,
+            "project_description": self.project_description,
+            "project_github": self.project_github,
+            "certification_name": self.certification_name,
+            "certification_organization": self.certification_organization,
+            "certification_issue_date": self.certification_issue_date,
+            "certification_credential_id": self.certification_credential_id,
+            "languages": self.languages,
+        }
+
+        generate_resume_docx(resume_data)
+
+        return rx.toast.success("DOCX generated successfully!")
+
 
     def generate_ai_summary(self):
         self.summary = (
@@ -289,4 +322,123 @@ class ResumeState(rx.State):
             "and contributing effectively to a dynamic organization."
         )
 
+        return rx.toast.success("Professional summary generated!")
+
+
+    def save_resume(self):
+        resume_data = {
+            "full_name": self.full_name,
+            "email": self.email,
+            "phone": self.phone,
+            "summary": self.summary,
+            "education": self.education,
+            "skills": self.skills,
+            "company": self.company,
+            "job_title": self.job_title,
+            "duration": self.duration,
+            "experience_description": self.experience_description,
+            "project_title": self.project_title,
+            "project_technologies": self.project_technologies,
+            "project_github": self.project_github,
+            "project_description": self.project_description,
+            "certification_name": self.certification_name,
+            "certification_organization": self.certification_organization,
+            "certification_issue_date": self.certification_issue_date,
+            "certification_credential_id": self.certification_credential_id,
+            "languages": self.languages,
+            "selected_template": self.selected_template,
+        }
+
+        os.makedirs("ResumeAI/saved_resumes", exist_ok=True)
+
+        filename = os.path.join(
+            "ResumeAI",
+            "saved_resumes",
+            "resume_data.json",
+        )
+
+        with open(filename, "w", encoding="utf-8") as file:
+            json.dump(resume_data, file, indent=4)
+
+        return rx.toast.success("Resume saved successfully!")
+
+
+    def load_resume(self):
+        filename = os.path.join(
+            "ResumeAI",
+            "saved_resumes",
+            "resume_data.json",
+        )
+
+        if not os.path.exists(filename):
+            print("No saved resume found.")
+            return
+
+        with open(filename, "r", encoding="utf-8") as file:
+            resume_data = json.load(file)
+
+        self.full_name = resume_data.get("full_name", "")
+        self.email = resume_data.get("email", "")
+        self.phone = resume_data.get("phone", "")
+        self.summary = resume_data.get("summary", "")
+        self.education = resume_data.get("education", "")
+        self.skills = resume_data.get("skills", "")
+        self.company = resume_data.get("company", "")
+        self.job_title = resume_data.get("job_title", "")
+        self.duration = resume_data.get("duration", "")
+        self.experience_description = resume_data.get("experience_description", "")
+        self.project_title = resume_data.get("project_title", "")
+        self.project_technologies = resume_data.get("project_technologies", "")
+        self.project_github = resume_data.get("project_github", "")
+        self.project_description = resume_data.get("project_description", "")
+        self.certification_name = resume_data.get("certification_name", "")
+        self.certification_organization = resume_data.get("certification_organization", "")
+        self.certification_issue_date = resume_data.get("certification_issue_date", "")
+        self.certification_credential_id = resume_data.get("certification_credential_id", "")
+        self.languages = resume_data.get("languages", "")
+        self.selected_template = resume_data.get("selected_template", "classic")
+
+        return rx.toast.success("Resume loaded successfully!")
+
+
+    def reset_resume(self):
+        # Personal Information
+        self.full_name = ""
+        self.email = ""
+        self.phone = ""
+
+        # Summary
+        self.summary = ""
+
+        # Education
+        self.education = ""
+
+        # Skills
+        self.skills = ""
+
+        # Experience
+        self.company = ""
+        self.job_title = ""
+        self.duration = ""
+        self.experience_description = ""
+
+        # Projects
+        self.project_title = ""
+        self.project_technologies = ""
+        self.project_github = ""
+        self.project_description = ""
+
+        # Certifications
+        self.certification_name = ""
+        self.certification_organization = ""
+        self.certification_issue_date = ""
+        self.certification_credential_id = ""
+
+        # Languages
+        self.languages = ""
+
+        # Template
+        self.selected_template = "classic"
+
+        return rx.toast.info("Started a new resume.")
     

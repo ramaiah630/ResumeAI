@@ -3,7 +3,7 @@ import reflex as rx
 from .components.navbar import navbar
 from .components.hero import hero
 from .components.feature_cards import feature_cards
-from .pages.resume_form import resume_form
+from .pages.resume_builder import resume_builder
 
 class State(rx.State):
     """Application state."""
@@ -30,6 +30,6 @@ app = rx.App()
 
 app.add_page(index)
 app.add_page(
-    resume_form,
+    resume_builder,
     route="/resume",
 )
