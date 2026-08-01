@@ -4,6 +4,7 @@ from .components.navbar import navbar
 from .components.hero import hero
 from .components.feature_cards import feature_cards
 from .pages.resume_builder import resume_builder
+from .pages.templates import templates
 
 class State(rx.State):
     """Application state."""
@@ -32,4 +33,8 @@ app.add_page(index)
 app.add_page(
     resume_builder,
     route="/resume",
+)
+app.add_page(
+    templates,
+    route="/templates",
 )

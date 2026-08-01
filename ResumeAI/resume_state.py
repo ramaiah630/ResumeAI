@@ -441,4 +441,8 @@ class ResumeState(rx.State):
         self.selected_template = "classic"
 
         return rx.toast.info("Started a new resume.")
+
+    
+    def choose_template(self, template: str):
+        self.selected_template = template
     

@@ -39,7 +39,7 @@ def resume_form() -> rx.Component:
         ),
 
         rx.progress(
-            ResumeState.completion_percentage,
+            value=ResumeState.completion_percentage,
             max=100,
             width="100%",
         ),
@@ -260,12 +260,23 @@ def resume_form() -> rx.Component:
             # ==========================
             # Generate Resume Button
             # ==========================
-            rx.button(
-               "Generate Resume",
-               on_click=ResumeState.export_pdf,
-               color_scheme="purple",
-               width=FORM_WIDTH,
-               size="3",
+            rx.hstack(
+                rx.button(
+                    "📄 Export PDF",
+                    on_click=ResumeState.export_pdf,
+                    color_scheme="purple",
+                    width="195px",
+                    size="3",
+                ),
+                rx.button(
+                    "📝 Export DOCX",
+                    on_click=ResumeState.export_docx,
+                    color_scheme="green",
+                    width="195px",
+                    size="3",
+                ),
+                spacing="3",
+                width=FORM_WIDTH,
             ),
             rx.button(
                "💾 Save Resume",

@@ -32,6 +32,7 @@ def hero() -> rx.Component:
                     rx.button(
                         "View Templates",
                         variant="outline",
+                        on_click=rx.redirect("/templates"),
                     ),
                     spacing="4",
                 ),
