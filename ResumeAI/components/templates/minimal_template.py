@@ -9,6 +9,7 @@ def minimal_template() -> rx.Component:
             ResumeState.full_name,
             font_size="2.4em",
             font_weight="bold",
+            color=ResumeState.theme_color,
         ),
 
         rx.text(
@@ -27,7 +28,7 @@ def minimal_template() -> rx.Component:
         rx.divider(margin_y="1.5em"),
 
         # Summary
-        rx.heading("Professional Summary", size="4"),
+        rx.heading("Professional Summary", color=ResumeState.theme_color,  size="4"),
         rx.text(
             ResumeState.summary,
             white_space="pre-wrap",
@@ -36,7 +37,7 @@ def minimal_template() -> rx.Component:
         rx.divider(margin_y="1.5em"),
 
         # Education
-        rx.heading("Education", size="4"),
+        rx.heading("Education", color=ResumeState.theme_color, size="4"),
         rx.text(
             ResumeState.education,
             white_space="pre-wrap",
@@ -45,7 +46,7 @@ def minimal_template() -> rx.Component:
         rx.divider(margin_y="1.5em"),
 
         # Experience
-        rx.heading("Experience", size="4"),
+        rx.heading("Experience", color=ResumeState.theme_color, size="4"),
 
         rx.text(
             ResumeState.job_title,
@@ -67,7 +68,7 @@ def minimal_template() -> rx.Component:
         rx.divider(margin_y="1.5em"),
 
         # Projects
-        rx.heading("Projects", size="4"),
+        rx.heading("Projects", color=ResumeState.theme_color, size="4"),
 
         rx.text(
             ResumeState.project_title,
@@ -87,7 +88,7 @@ def minimal_template() -> rx.Component:
         rx.divider(margin_y="1.5em"),
 
         # Skills
-        rx.heading("Skills", size="4"),
+        rx.heading("Skills", color=ResumeState.theme_color, size="4"),
 
         rx.box(height="10px"),
 

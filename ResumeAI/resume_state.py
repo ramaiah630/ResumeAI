@@ -67,6 +67,9 @@ class ResumeState(rx.State):
 
     selected_template: str = "classic"
 
+    selected_theme: str = "Blue"
+    theme_color: str = "#2563eb"
+
     # ==========================
     # Job_description & cover letter
     # ==========================
@@ -475,3 +478,16 @@ class ResumeState(rx.State):
 
     {self.full_name}
     """
+
+    def change_theme(self, value: str):
+        self.selected_theme = value
+
+        colors = {
+            "Blue": "#2563eb",
+            "Green": "#16a34a",
+            "Purple": "#9333ea",
+            "Red": "#dc2626",
+            "Black": "#000000",
+        }
+
+        self.theme_color = colors[value]

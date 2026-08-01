@@ -3,6 +3,7 @@ import reflex as rx
 from ..components.template_selector import template_selector
 from ..components.resume_preview import resume_preview
 from .resume_form import resume_form
+from ..components.theme_selector import theme_selector
 
 
 def resume_builder() -> rx.Component:
@@ -18,6 +19,7 @@ def resume_builder() -> rx.Component:
             rx.box(
                 rx.vstack(
                     template_selector(),
+                    theme_selector(),
                     resume_preview(),
                     spacing="4",
                     width="100%",
