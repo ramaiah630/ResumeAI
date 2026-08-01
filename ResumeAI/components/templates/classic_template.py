@@ -43,6 +43,18 @@ def classic_template() -> rx.Component:
                     width="100%",
                 ),
 
+                rx.text(
+                    rx.cond(
+                        ResumeState.professional_title != "",
+                        ResumeState.professional_title,
+                        "Professional Title",
+                    ),
+                    font_size="1.2em",
+                    color="Black",
+                    text_align="center",
+                    width="100%",
+                ),
+
                 rx.hstack(
                     preview_text(
                         ResumeState.email,

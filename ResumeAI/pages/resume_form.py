@@ -96,6 +96,13 @@ def resume_form() -> rx.Component:
                 width=FORM_WIDTH,
             ),
 
+            rx.input(
+                placeholder="Professional Title",
+                value=ResumeState.professional_title,
+                on_change=ResumeState.set_professional_title,
+                width=FORM_WIDTH,
+            ),
+
             # ==========================
             # Professional Summary
             # ==========================

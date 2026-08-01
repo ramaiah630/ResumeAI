@@ -65,6 +65,12 @@ class ResumeState(rx.State):
     # ==========================
 
     selected_template: str = "classic"
+
+    # ==========================
+    # Professional Title
+    # ==========================
+
+    professional_title: str = ""
   
 
     # ==========================
@@ -445,4 +451,7 @@ class ResumeState(rx.State):
     
     def choose_template(self, template: str):
         self.selected_template = template
+
+    def set_professional_title(self, value: str):
+        self.professional_title = value
     

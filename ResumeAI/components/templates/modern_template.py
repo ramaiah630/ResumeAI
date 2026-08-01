@@ -10,20 +10,61 @@ def modern_template() -> rx.Component:
             # LEFT SIDEBAR
             # ==========================
             rx.box(
+                rx.center(
+                    rx.vstack(
+
+                        rx.avatar(
+                            fallback="👤",
+                            size="8",
+                        ),
+
+                        rx.text(
+                            ResumeState.full_name,
+                            font_size="1.3em",
+                            font_weight="bold",
+                            text_align="center",
+                        ),
+
+                        rx.text(
+                            ResumeState.professional_title,
+                            text_align="center",
+                        ),
+
+                        spacing="3",
+                        align="center",
+                    ),
+                ),
+
+                rx.divider(margin_y="1.5em"),
 
                 rx.heading(
                     "Contact",
                     size="4",
+                    color="#2563eb",
                 ),
 
-                rx.text(ResumeState.email),
-                rx.text(ResumeState.phone),
+                rx.vstack(
+
+                    rx.hstack(
+                        rx.text("📧"),
+                        rx.text(ResumeState.email),
+                    ),
+
+                    rx.hstack(
+                        rx.text("📱"),
+                        rx.text(ResumeState.phone),
+                    ),
+
+                    spacing="2",
+                    align="start",
+                ),
 
                 rx.divider(),
 
                 rx.heading(
                     "Skills",
                     size="4",
+                    color="#2563eb",
                 ),
 
                 rx.flex(
@@ -44,6 +85,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Languages",
                     size="4",
+                    color="#2563eb",
                 ),
 
                 rx.flex(
@@ -64,6 +106,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Certifications",
                     size="4",
+                    color="#2563eb",
                 ),
 
                 rx.text(ResumeState.certification_name),
@@ -94,9 +137,9 @@ def modern_template() -> rx.Component:
                 ),
 
                 rx.text(
-                    ResumeState.job_title,
+                    ResumeState.professional_title,
                     font_size="1.2em",
-                    color="gray",
+                    color="black",
                 ),
 
                 rx.divider(margin_y="1em"),
@@ -105,6 +148,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Professional Summary",
                     size="4",
+                    color="#2563eb",
                 ),
 
                 rx.text(
@@ -118,6 +162,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Education",
                     size="4",
+                    color="#2563eb",
                 ),
 
                 rx.text(
@@ -131,6 +176,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Experience",
                     size="4",
+                    color="#2563eb",
                 ),
 
                 rx.text(
@@ -156,6 +202,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Projects",
                     size="4",
+                    color="#2563eb",
                 ),
 
                 rx.text(
