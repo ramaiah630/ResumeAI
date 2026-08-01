@@ -7,6 +7,7 @@ def section_heading(title: str) -> rx.Component:
     return rx.heading(
         title,
         size="4",
+        color=ResumeState.theme_color,
         margin_top="20px",
         margin_bottom="10px",
     )
@@ -33,12 +34,14 @@ def classic_template() -> rx.Component:
                 # Header
                 # ==========================
                 rx.heading(
+                    
                     rx.cond(
                         ResumeState.full_name != "",
                         ResumeState.full_name,
                         "Your Name",
                     ),
                     size="8",
+                    color=ResumeState.theme_color,
                     text_align="center",
                     width="100%",
                 ),

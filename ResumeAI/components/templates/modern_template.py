@@ -40,7 +40,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Contact",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.vstack(
@@ -64,7 +64,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Skills",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.flex(
@@ -85,7 +85,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Languages",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.flex(
@@ -106,7 +106,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Certifications",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.text(ResumeState.certification_name),
@@ -133,7 +133,7 @@ def modern_template() -> rx.Component:
                     ResumeState.full_name,
                     font_size="2.3em",
                     font_weight="bold",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.text(
@@ -148,7 +148,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Professional Summary",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.text(
@@ -162,7 +162,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Education",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.text(
@@ -176,7 +176,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Experience",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.text(
@@ -202,7 +202,7 @@ def modern_template() -> rx.Component:
                 rx.heading(
                     "Projects",
                     size="4",
-                    color="#2563eb",
+                    color=ResumeState.theme_color
                 ),
 
                 rx.text(

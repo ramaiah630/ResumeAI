@@ -76,6 +76,14 @@ class ResumeState(rx.State):
 
     job_description: str = ""
     cover_letter: str = ""
+
+
+    # ==========================
+    # Job Description Matcher
+    # ==========================
+
+    job_match_score: int = 0
+    job_match_feedback: str = ""
   
 
     # ==========================
@@ -491,3 +499,40 @@ class ResumeState(rx.State):
         }
 
         self.theme_color = colors[value]
+
+
+    def analyze_job_description(self):
+
+        score = 0
+        feedback = []
+
+        job_text = self.job_description.lower()
+
+        if "python" in job_text and "python" in self.skills.lower():
+            score += 20
+        else:
+            feedback.append("Add Python to your skills.")
+
+        if "sql" in job_text and "sql" in self.skills.lower():
+            score += 20
+        else:
+            feedback.append("Mention SQL if you know it.")
+
+        if "git" in job_text and "git" in self.skills.lower():
+            score += 20
+        else:
+            feedback.append("Add Git to your skills.")
+
+        if self.summary.strip():
+            score += 20
+        else:
+            feedback.append("Add a professional summary.")
+
+        if self.company.strip():
+            score += 20
+        else:
+            feedback.append("Include work experience.")
+
+        self.job_match_score = score
+
+        self.job_match_feedback = "\n".join(feedback)

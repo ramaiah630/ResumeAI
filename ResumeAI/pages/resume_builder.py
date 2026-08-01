@@ -25,8 +25,8 @@ def resume_builder() -> rx.Component:
                     width="100%",
                 ),
                 rx.button(
-                    "Cover Letter",
-                    on_click=rx.redirect("/cover-letter"),
+                    "Job Matcher",
+                    on_click=rx.redirect("/job-match"),
                 ),
                 
                 width="60%",
