@@ -22,6 +22,11 @@ def resume_builder() -> rx.Component:
                     spacing="4",
                     width="100%",
                 ),
+                rx.button(
+                    "Cover Letter",
+                    on_click=rx.redirect("/cover-letter"),
+                ),
+                
                 width="60%",
             ),
 

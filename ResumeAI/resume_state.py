@@ -9,6 +9,7 @@ class ResumeState(rx.State):
     # Personal Information
     # ==========================
     full_name: str = ""
+    professional_title: str = ""
     email: str = ""
     phone: str = ""
 
@@ -67,10 +68,11 @@ class ResumeState(rx.State):
     selected_template: str = "classic"
 
     # ==========================
-    # Professional Title
+    # Job_description & cover letter
     # ==========================
 
-    professional_title: str = ""
+    job_description: str = ""
+    cover_letter: str = ""
   
 
     # ==========================
@@ -203,6 +205,9 @@ class ResumeState(rx.State):
     # ==========================
     def set_full_name(self, value: str):
         self.full_name = value
+
+    def set_professional_title(self, value: str):
+        self.professional_title = value
 
     def set_email(self, value: str):
         self.email = value
@@ -452,6 +457,21 @@ class ResumeState(rx.State):
     def choose_template(self, template: str):
         self.selected_template = template
 
-    def set_professional_title(self, value: str):
-        self.professional_title = value
-    
+    def set_job_description(self, value: str):
+        self.job_description = value
+
+
+    def generate_cover_letter(self):
+        self.cover_letter = f"""
+    Dear Hiring Manager,
+
+    My name is {self.full_name}, and I am applying for this opportunity.
+
+    With experience in {self.professional_title}, along with my skills in {self.skills}, I believe I can contribute effectively to your team.
+
+    Thank you for your time and consideration.
+
+    Sincerely,
+
+    {self.full_name}
+    """

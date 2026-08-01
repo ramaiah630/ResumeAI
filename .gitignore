@@ -1,6 +1,40 @@
-*.db
 .web
 .states
+# Database
+*.db
+
+# Reflex
+.web/
+.states/
+.reflex/
+.reflex_cache/
+
+# Python
 __pycache__/
-assets/external/
 *.py[cod]
+*.pyo
+
+# Virtual Environment
+.venv/
+venv/
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Generated Resume Files
+generated_resume.pdf
+generated_resume.docx
+
+# Saved Resume Data (if you don't want sample/user data in GitHub)
+saved_resumes/
+
+# External Assets
+assets/external/
