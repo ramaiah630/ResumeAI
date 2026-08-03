@@ -6,7 +6,7 @@ from .components.feature_cards import feature_cards
 from .pages.resume_builder import resume_builder
 from .pages.templates import templates
 from .pages.job_match import job_match
-#from .pages.cover_letter import cover_letter
+from .pages.cover_letter import cover_letter
 
 class State(rx.State):
     """Application state."""
@@ -40,10 +40,10 @@ app.add_page(
     templates,
     route="/templates",
 )
-#app.add_page(
-    #cover_letter,
-    #route="/cover-letter",
-#)
+app.add_page(
+    cover_letter,
+    route="/cover-letter",
+)
 app.add_page(
     job_match,
     route="/job-match",

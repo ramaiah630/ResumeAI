@@ -24,9 +24,18 @@ def resume_builder() -> rx.Component:
                     spacing="4",
                     width="100%",
                 ),
-                rx.button(
-                    "Job Matcher",
-                    on_click=rx.redirect("/job-match"),
+                rx.hstack(
+                    rx.button(
+                        "Job Matcher",
+                        on_click=rx.redirect("/job-match"),
+                    ),
+
+                    rx.button(
+                        "Cover Letter",
+                        on_click=rx.redirect("/cover-letter"),
+                    ),
+
+                    spacing="4",
                 ),
                 
                 width="60%",

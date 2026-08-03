@@ -1,7 +1,11 @@
 import reflex as rx
 from ResumeAI.utils.pdf_generator import generate_resume_pdf
 from ResumeAI.utils.docx_generator import generate_resume_docx
-from ResumeAI.utils.ai_service import improve_experience
+from ResumeAI.utils.ai_service import (
+    improve_experience,
+    generate_summary,
+    generate_cover_letter,
+)
 import os
 import json
 
@@ -377,14 +381,28 @@ class ResumeState(rx.State):
         return rx.toast.success("DOCX generated successfully!")
 
 
+
     def generate_ai_summary(self):
-        self.summary = (
-            f"Motivated {self.education} graduate with skills in "
-            f"{self.skills}. Passionate about learning new technologies "
-            "and contributing effectively to a dynamic organization."
+
+        if not self.education.strip():
+            return rx.toast.warning(
+                "Please enter your education."
+            )
+
+        if not self.skills.strip():
+            return rx.toast.warning(
+                "Please enter your skills."
+            )
+
+        self.summary = generate_summary(
+            education=self.education,
+            skills=self.skills,
+            job_title=self.professional_title,
         )
 
-        return rx.toast.success("Professional summary generated!")
+        return rx.toast.success(
+            "Professional summary generated!"
+        )
 
 
     def save_resume(self):
@@ -513,19 +531,25 @@ class ResumeState(rx.State):
 
 
     def generate_cover_letter(self):
-        self.cover_letter = f"""
-    Dear Hiring Manager,
 
-    My name is {self.full_name}, and I am applying for this opportunity.
+        if not self.job_description.strip():
+            return rx.toast.warning(
+                "Please paste a job description."
+            )
 
-    With experience in {self.professional_title}, along with my skills in {self.skills}, I believe I can contribute effectively to your team.
+        self.cover_letter = generate_cover_letter(
+            full_name=self.full_name,
+            job_title=self.professional_title,
+            education=self.education,
+            skills=self.skills,
+            experience=self.experience_description,
+            job_description=self.job_description,
+        )
 
-    Thank you for your time and consideration.
+        return rx.toast.success(
+            "Cover letter generated!"
+        )
 
-    Sincerely,
-
-    {self.full_name}
-    """
 
     def change_theme(self, value: str):
         self.selected_theme = value
