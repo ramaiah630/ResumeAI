@@ -181,6 +181,38 @@ def resume_form() -> rx.Component:
                 width=FORM_WIDTH,
                 height="120px",
             ),
+            rx.button(
+                "✨ Improve with AI",
+                on_click=ResumeState.improve_experience,
+                color_scheme="green",
+                width="250px",
+            ),
+
+            rx.cond(
+                ResumeState.improved_experience != "",
+                rx.vstack(
+
+                    rx.heading(
+                        "AI Improved Experience",
+                        size="4",
+                    ),
+                    rx.button(
+                        "Use This Version",
+                        on_click=ResumeState.accept_improved_experience,
+                        color_scheme="blue",
+                    ),
+
+                    rx.text_area(
+                        value=ResumeState.improved_experience,
+                        read_only=True,
+                        width="100%",
+                        height="180px",
+                    ),
+
+                    spacing="3",
+                    width="100%",
+                ),
+            ),
 
             # ==========================
             # Projects

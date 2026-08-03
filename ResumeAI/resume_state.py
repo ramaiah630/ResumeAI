@@ -1,6 +1,7 @@
 import reflex as rx
 from ResumeAI.utils.pdf_generator import generate_resume_pdf
 from ResumeAI.utils.docx_generator import generate_resume_docx
+from ResumeAI.utils.ai_service import improve_experience
 import os
 import json
 
@@ -17,6 +18,8 @@ class ResumeState(rx.State):
     # Professional Summary
     # ==========================
     summary: str = ""
+
+    improved_experience: str = ""
 
     # ==========================
     # Education
@@ -607,3 +610,31 @@ class ResumeState(rx.State):
             )
 
         self.job_match_feedback = "\n".join(suggestions)
+
+    def improve_experience(self):
+
+        if not self.experience_description.strip():
+            return rx.toast.warning(
+                "Please enter your experience first."
+            )
+
+        self.improved_experience = improve_experience(
+            experience=self.experience_description,
+            job_title=self.job_title,
+            company=self.company,
+            skills=self.skills,
+        )
+
+        return rx.toast.success(
+            "Experience improved successfully!"
+        )
+
+
+
+    def accept_improved_experience(self):
+        self.experience_description = self.improved_experience
+        self.improved_experience = ""
+
+        return rx.toast.success(
+            "Experience updated!"
+    )
