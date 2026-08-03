@@ -1,5 +1,6 @@
 import reflex as rx
 from ..resume_state import ResumeState
+from ..components.copy_button import copy_button
 
 
 def cover_letter() -> rx.Component:
@@ -26,11 +27,32 @@ def cover_letter() -> rx.Component:
                 width="300px",
             ),
 
-            rx.text_area(
-                value=ResumeState.cover_letter,
+            rx.vstack(
+
+                rx.hstack(
+
+                    rx.heading(
+                        "Generated Cover Letter",
+                        size="5",
+                    ),
+
+                    copy_button(
+                        ResumeState.cover_letter,
+                    ),
+
+                    justify="between",
+                    width="100%",
+                ),
+
+                rx.text_area(
+                    value=ResumeState.cover_letter,
+                    width="800px",
+                    height="500px",
+                    read_only=True,
+                ),
+
+                spacing="3",
                 width="800px",
-                height="500px",
-                read_only=True,
             ),
 
             spacing="5",

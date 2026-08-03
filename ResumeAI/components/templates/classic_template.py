@@ -20,7 +20,8 @@ def preview_text(value, placeholder) -> rx.Component:
             value != "",
             value,
             placeholder,
-        )
+        ),
+        white_space="pre-wrap",
     )
 
 def classic_template() -> rx.Component:
@@ -144,6 +145,10 @@ def classic_template() -> rx.Component:
                     ResumeState.experience_description,
                     "Worked on AI-powered web applications and automation tools.",
                 ),
+
+                # ==========================
+                # Projects
+                # ==========================
 
                 section_heading("Projects"),
 

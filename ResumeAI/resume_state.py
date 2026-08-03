@@ -43,6 +43,14 @@ class ResumeState(rx.State):
     job_title: str = ""
     duration: str = ""
     experience_description: str = ""
+    experiences: list[dict] = [
+        {
+            "company": "",
+            "job_title": "",
+            "duration": "",
+            "description": "",
+        }
+    ]
 
     # ==========================
     # Projects
@@ -129,6 +137,17 @@ class ResumeState(rx.State):
         "excel",
         "figma",
     ]
+
+
+    # ==========================
+    # AI State
+    # ==========================
+
+    is_generating: bool = False
+
+    resume_review: str = ""
+    resume_score: str = ""
+
 
     # ==========================
     # Computed Variables
@@ -320,6 +339,21 @@ class ResumeState(rx.State):
 
     def set_selected_template(self, value: str):
         self.selected_template = value
+
+    def add_experience(self):
+        self.experiences.append(
+            {
+                "company": "",
+                "job_title": "",
+                "duration": "",
+                "description": "",
+            }
+        )
+    def remove_experience(self, index: int):
+        if len(self.experiences) > 1:
+            self.experiences.pop(index)
+
+
 
     def export_pdf(self):
         """Generate a PDF from the current resume data."""

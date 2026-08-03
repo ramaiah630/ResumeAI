@@ -1,5 +1,6 @@
 import reflex as rx
 from ..resume_state import ResumeState
+from ..components.copy_button import copy_button
 
 # ==========================
 # Constants
@@ -116,11 +117,19 @@ def resume_form() -> rx.Component:
                 height="120px",
             ),
 
-            rx.button(
-                "✨ Generate AI Summary",
-                on_click=ResumeState.generate_ai_summary,
-                color_scheme="green",
-                width="100%",
+            rx.hstack(
+
+                rx.button(
+                    "✨ Generate AI Summary",
+                    on_click=ResumeState.generate_ai_summary,
+                    color_scheme="green",
+                ),
+
+                copy_button(
+                    ResumeState.summary,
+                ),
+
+                spacing="3",
             ),
 
             # ==========================
@@ -192,10 +201,20 @@ def resume_form() -> rx.Component:
                 ResumeState.improved_experience != "",
                 rx.vstack(
 
-                    rx.heading(
-                        "AI Improved Experience",
-                        size="4",
+                    rx.hstack(
+                        rx.heading(
+                            "AI Improved Experience",
+                            size="4",
+                        ),
+
+                        copy_button(
+                        ResumeState.improved_experience,
+                        ),
+
+                        justify="between",
+                        width="100%",
                     ),
+
                     rx.button(
                         "Use This Version",
                         on_click=ResumeState.accept_improved_experience,
@@ -212,6 +231,12 @@ def resume_form() -> rx.Component:
                     spacing="3",
                     width="100%",
                 ),
+            ),
+            rx.button(
+                "➕ Add Another Experience",
+                on_click=ResumeState.add_experience,
+                color_scheme="blue",
+                width="100%",
             ),
 
             # ==========================

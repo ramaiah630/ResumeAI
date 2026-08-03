@@ -26,7 +26,10 @@ def generate_text(prompt: str) -> str:
         return response.text
 
     except Exception as e:
-        return f"Error: {str(e)}"
+        return (
+            "Gemini is currently unavailable or busy. "
+            "Please try again in a few moments."
+        )
 
 
 def improve_experience(
@@ -35,11 +38,13 @@ def improve_experience(
     company: str,
     skills: str,
 ) -> str:
-
+    
     prompt = f"""
 You are an expert resume writer.
 
-Improve the following work experience for a professional resume.
+Rewrite the following work experience for a professional resume.
+
+Candidate Information
 
 Job Title:
 {job_title}
@@ -53,12 +58,19 @@ Skills:
 Current Experience:
 {experience}
 
-Requirements:
-- Keep it professional.
+Instructions:
+
+- Rewrite only what the candidate has provided.
+- Do NOT invent technologies.
+- Do NOT invent responsibilities.
+- Do NOT invent achievements.
+- Preserve the original meaning.
+- Improve grammar and readability.
 - Use strong action verbs.
 - Make it ATS-friendly.
 - Keep it concise.
-- Return only the improved experience.
+- Return 2–4 professional bullet points.
+- Return only the rewritten experience.
 """
 
     return generate_text(prompt)
@@ -132,6 +144,61 @@ Rules:
 - Tailor it to the job description.
 - Do NOT invent experience.
 - Return only the cover letter.
+"""
+
+    return generate_text(prompt)
+
+def analyze_resume(
+    full_name: str,
+    professional_title: str,
+    summary: str,
+    education: str,
+    skills: str,
+    experience: str,
+    projects: str,
+) -> str:
+
+    prompt = f"""
+You are an expert ATS recruiter.
+
+Analyze this resume.
+
+Name:
+{full_name}
+
+Professional Title:
+{professional_title}
+
+Summary:
+{summary}
+
+Education:
+{education}
+
+Skills:
+{skills}
+
+Experience:
+{experience}
+
+Projects:
+{projects}
+
+Provide:
+
+1. Resume Score (0-100)
+
+2. Strengths
+
+3. Weaknesses
+
+4. ATS Suggestions
+
+5. Recruiter Advice
+
+Do not invent information.
+
+Return only the analysis.
 """
 
     return generate_text(prompt)
