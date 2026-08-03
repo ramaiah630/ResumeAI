@@ -83,8 +83,45 @@ class ResumeState(rx.State):
     # ==========================
 
     job_match_score: int = 0
+
+    matched_skills: list[str] = []
+    missing_skills: list[str] = []
+    extra_skills: list[str] = []
+
     job_match_feedback: str = ""
-  
+
+    known_skills: list[str] = [
+        "python",
+        "java",
+        "javascript",
+        "typescript",
+        "react",
+        "angular",
+        "vue",
+        "html",
+        "css",
+        "sql",
+        "mysql",
+        "postgresql",
+        "mongodb",
+        "docker",
+        "kubernetes",
+        "aws",
+        "azure",
+        "gcp",
+        "git",
+        "github",
+        "linux",
+        "fastapi",
+        "flask",
+        "django",
+        "rest api",
+        "node.js",
+        "power bi",
+        "tableau",
+        "excel",
+        "figma",
+    ]
 
     # ==========================
     # Computed Variables
@@ -503,36 +540,70 @@ class ResumeState(rx.State):
 
     def analyze_job_description(self):
 
-        score = 0
-        feedback = []
+        # Resume skills entered by user
+        resume_skills = [
+            skill.strip().lower()
+            for skill in self.skills.split(",")
+            if skill.strip()
+        ]
 
+        # Entire job description
         job_text = self.job_description.lower()
 
-        if "python" in job_text and "python" in self.skills.lower():
-            score += 20
-        else:
-            feedback.append("Add Python to your skills.")
+        # Detect skills mentioned in the job description
+        job_skills = []
 
-        if "sql" in job_text and "sql" in self.skills.lower():
-            score += 20
-        else:
-            feedback.append("Mention SQL if you know it.")
+        for skill in self.known_skills:
+            if skill in job_text:
+                job_skills.append(skill)
 
-        if "git" in job_text and "git" in self.skills.lower():
-            score += 20
-        else:
-            feedback.append("Add Git to your skills.")
+        # Compare
+        matched = [
+            skill
+            for skill in job_skills
+            if skill in resume_skills
+        ]
 
-        if self.summary.strip():
-            score += 20
-        else:
-            feedback.append("Add a professional summary.")
+        missing = [
+            skill
+            for skill in job_skills
+            if skill not in resume_skills
+        ]
 
-        if self.company.strip():
-            score += 20
+        extra = [
+            skill
+            for skill in resume_skills
+            if skill not in job_skills
+        ]
+
+        self.matched_skills = matched
+        self.missing_skills = missing
+        self.extra_skills = extra
+
+        # ATS Score
+        if len(job_skills) == 0:
+            score = 0
         else:
-            feedback.append("Include work experience.")
+            score = int(
+                len(matched) / len(job_skills) * 100
+            )
 
         self.job_match_score = score
 
-        self.job_match_feedback = "\n".join(feedback)
+        # Suggestions
+        suggestions = []
+
+        if missing:
+            suggestions.append(
+                "Consider adding these skills if you have experience:"
+            )
+
+            for skill in missing:
+                suggestions.append(f"• {skill.title()}")
+
+        if not suggestions:
+            suggestions.append(
+                "Excellent! Your resume matches the required skills."
+            )
+
+        self.job_match_feedback = "\n".join(suggestions)

@@ -48,17 +48,67 @@ def job_match() -> rx.Component:
                 ResumeState.job_match_score,
                 "% Match",
             ),
+            rx.heading(
+                "✅ Matched Skills",
+                size="5",
+            ),
 
+            rx.flex(
+                rx.foreach(
+                    ResumeState.matched_skills,
+                    lambda skill: rx.badge(
+                        skill.title(),
+                        color_scheme="green",
+                        variant="solid",
+                    ),
+                ),
+                wrap="wrap",
+                spacing="2",
+            ),
+            rx.heading(
+                "❌ Missing Skills",
+                size="5",
+            ),
+
+            rx.flex(
+                rx.foreach(
+                    ResumeState.missing_skills,
+                    lambda skill: rx.badge(
+                        skill.title(),
+                        color_scheme="red",
+                        variant="solid",
+                    ),
+                ),
+                wrap="wrap",
+                spacing="2",
+            ),
+
+            rx.heading(
+                "📌 Extra Skills",
+                size="5",
+            ),
+
+            rx.flex(
+                rx.foreach(
+                    ResumeState.extra_skills,
+                    lambda skill: rx.badge(
+                        skill.title(),
+                        color_scheme="blue",
+                        variant="soft",
+                    ),
+                ),
+                wrap="wrap",
+                spacing="2",
+            ),
+            
             rx.heading(
                 "Suggestions",
                 size="5",
             ),
 
-            rx.text_area(
-                value=ResumeState.job_match_feedback,
-                read_only=True,
-                width="800px",
-                height="180px",
+            rx.text(
+                ResumeState.job_match_feedback,
+                white_space="pre-wrap",
             ),
 
             spacing="5",
