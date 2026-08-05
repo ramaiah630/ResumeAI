@@ -1,88 +1,98 @@
 import reflex as rx
 
 
-def feature_card(
+def navigation_card(
+    emoji: str,
     title: str,
     description: str,
-    emoji: str,
-    route: str = "",
+    route: str,
 ) -> rx.Component:
+
     return rx.card(
+
         rx.vstack(
 
             rx.text(
                 emoji,
-                font_size="2em",
+                font_size="3em",
             ),
 
             rx.heading(
                 title,
-                size="5",
+                size="6",
             ),
 
             rx.text(
                 description,
-                color_scheme="gray",
                 text_align="center",
+                color="gray",
             ),
 
-            rx.cond(
-                route != "",
-                rx.button(
-                    "Open",
-                    on_click=rx.redirect(route),
-                    width="100%",
-                ),
+            rx.button(
+                "Open",
+                on_click=rx.redirect(route),
+                color_scheme="purple",
+                width="100%",
             ),
 
-            spacing="3",
+            spacing="4",
             align="center",
         ),
 
-        padding="1.5em",
-        width="260px",
+        width="320px",
+        padding="2em",
     )
 
 
 def feature_cards() -> rx.Component:
+
     return rx.center(
-        rx.hstack(
 
-            feature_card(
-                "AI Resume Writing",
-                "Generate professional resume content with AI.",
-                "🤖",
+        rx.vstack(
+
+            rx.heading(
+                "Choose What You Want To Do",
+                size="8",
             ),
 
-            feature_card(
-                "PDF Export",
-                "Download beautiful ATS-friendly PDF resumes.",
-                "📄",
+            rx.text(
+                "Everything you need to build professional resumes with AI.",
+                color="gray",
             ),
 
-            feature_card(
-                "Modern Templates",
-                "Choose from elegant professional designs.",
-                "🎨",
+            rx.hstack(
+
+                navigation_card(
+                    "📝",
+                    "Resume Builder",
+                    "Create, edit and export your professional resume.",
+                    "/resume",
+                ),
+
+                navigation_card(
+                    "🤖",
+                    "AI Tools",
+                    "Job Matcher, Cover Letter and Resume Review.",
+                    "/ai-tools",
+                ),
+
+                navigation_card(
+                    "🎨",
+                    "Templates",
+                    "Choose from Classic, Modern and Minimal templates.",
+                    "/templates",
+                ),
+
+                spacing="6",
+                wrap="wrap",
+                justify="center",
+                width="100%",
             ),
 
-            feature_card(
-                "Cloud Sync",
-                "Access your resumes from anywhere.",
-                "☁️",
-            ),
-
-            feature_card(
-                "AI Tools",
-                "Access Job Matcher, Cover Letter Generator, Resume Review and more.",
-                "🤖",
-                "/ai-tools",
-            ),
-
-            spacing="5",
-            wrap="wrap",
-            justify="center",
+            spacing="6",
+            width="100%",
         ),
 
-        padding_bottom="4em",
+        padding_bottom="5em",
+        width="100%",
     )

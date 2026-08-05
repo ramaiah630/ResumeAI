@@ -8,6 +8,8 @@ from .pages.templates import templates
 from .pages.job_match import job_match
 from .pages.cover_letter import cover_letter
 from .pages.ai_tools import ai_tools
+from .pages.resume_review import resume_review
+from .components.why_choose import why_choose
 
 class State(rx.State):
     """Application state."""
@@ -19,6 +21,7 @@ def index() -> rx.Component:
         navbar(),
         hero(),
         feature_cards(),
+        why_choose(),
         background="""
         linear-gradient(
             180deg,
@@ -52,4 +55,8 @@ app.add_page(
 app.add_page(
     ai_tools,
     route="/ai-tools",
+)
+app.add_page(
+    resume_review,
+    route="/resume-review",
 )

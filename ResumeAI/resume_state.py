@@ -5,6 +5,7 @@ from ResumeAI.utils.ai_service import (
     improve_experience,
     generate_summary,
     generate_cover_letter,
+    analyze_resume,
 )
 import os
 import json
@@ -138,15 +139,43 @@ class ResumeState(rx.State):
         "figma",
     ]
 
-
     # ==========================
-    # AI State
+    # AI Loading States
     # ==========================
 
-    is_generating: bool = False
+    is_generating_summary: bool = False
+    summary_status: str = ""
+
+    is_generating_experience: bool = False
+    experience_status: str = ""
+
+    is_generating_cover_letter: bool = False
+    cover_letter_status: str = ""
+
+    is_generating_review: bool = False
+    review_status: str = ""
+     
+    # ==========================
+    # Resume Review & Score
+    # ==========================
 
     resume_review: str = ""
     resume_score: str = ""
+
+    resume_score_value: int = 0
+
+
+    overall_summary: str = ""
+
+    strengths: list[str] = []
+
+    improvements: list[str] = []
+
+    missing_keywords: list[str] = []
+
+    ai_ats_suggestions: list[str] = []
+
+    recruiter_advice: str = ""
 
 
     # ==========================
@@ -272,6 +301,22 @@ class ResumeState(rx.State):
            suggestions.append("Include the languages you know.")
 
         return suggestions
+
+    @rx.var
+    def resume_score_color(self) -> str:
+        try:
+            score = int(self.resume_score.split("/")[0])
+
+            if score >= 80:
+                return "green"
+
+            if score >= 60:
+                return "orange"
+
+            return "red"
+
+        except:
+            return "gray"
 
     
     # ==========================
@@ -427,16 +472,24 @@ class ResumeState(rx.State):
             return rx.toast.warning(
                 "Please enter your skills."
             )
+        self.is_generating_summary = True
+        self.summary_status = "🤖 Gemini is generating your professional summary..."
 
-        self.summary = generate_summary(
-            education=self.education,
-            skills=self.skills,
-            job_title=self.professional_title,
-        )
+        try:
 
-        return rx.toast.success(
-            "Professional summary generated!"
-        )
+            self.summary = generate_summary(
+                education=self.education,
+                skills=self.skills,
+                job_title=self.professional_title,
+            )
+
+            return rx.toast.success(
+                "Professional summary generated!"
+            )
+        finally:
+
+            self.is_generating_summary = False
+            self.ai_status = ""
 
 
     def save_resume(self):
@@ -566,23 +619,25 @@ class ResumeState(rx.State):
 
     def generate_cover_letter(self):
 
-        if not self.job_description.strip():
-            return rx.toast.warning(
-                "Please paste a job description."
+        self.is_generating_cover_letter = True
+        self.cover_letter_status = (
+            "🤖 Gemini is writing your cover letter..."
+        )
+
+        try:
+
+            self.cover_letter = generate_cover_letter(
+                ...
             )
 
-        self.cover_letter = generate_cover_letter(
-            full_name=self.full_name,
-            job_title=self.professional_title,
-            education=self.education,
-            skills=self.skills,
-            experience=self.experience_description,
-            job_description=self.job_description,
-        )
+            return rx.toast.success(
+                "Cover letter generated!"
+            )
 
-        return rx.toast.success(
-            "Cover letter generated!"
-        )
+        finally:
+
+            self.is_generating_cover_letter = False
+            self.cover_letter_status = ""
 
 
     def change_theme(self, value: str):
@@ -676,17 +731,26 @@ class ResumeState(rx.State):
                 "Please enter your experience first."
             )
 
-        self.improved_experience = improve_experience(
-            experience=self.experience_description,
-            job_title=self.job_title,
-            company=self.company,
-            skills=self.skills,
-        )
+        self.is_generating = True
+        self.ai_status = "🤖 Gemini is improving your work experience..."
 
-        return rx.toast.success(
-            "Experience improved successfully!"
-        )
+        try:
 
+            self.improved_experience = improve_experience(
+                experience=self.experience_description,
+                job_title=self.job_title,
+                company=self.company,
+                skills=self.skills,
+            )
+
+            return rx.toast.success(
+                "Experience improved successfully!"
+            )
+
+        finally:
+
+            self.is_generating = False
+            self.ai_status = ""
 
 
     def accept_improved_experience(self):
@@ -696,3 +760,72 @@ class ResumeState(rx.State):
         return rx.toast.success(
             "Experience updated!"
     )
+
+    def analyze_resume(self):
+
+        self.is_generating_review = True
+        self.review_status = "🤖 Gemini is analyzing your resume..."
+
+        try:
+
+            self.resume_review = analyze_resume(
+                full_name=self.full_name,
+                professional_title=self.professional_title,
+                summary=self.summary,
+                education=self.education,
+                skills=self.skills,
+                experience=self.experience_description,
+                projects=self.project_description,
+            )
+
+            import json
+
+            try:
+                data = json.loads(self.resume_review)
+
+                self.resume_score_value = data.get("resume_score", 0)
+                self.resume_score = f"{self.resume_score_value}/100"
+
+                self.overall_summary = data.get(
+                    "overall_summary",
+                    "",
+                )
+
+                self.strengths = data.get(
+                    "strengths",
+                    [],
+                )
+
+                self.improvements = data.get(
+                    "improvements",
+                    [],
+                )
+
+                self.missing_keywords = data.get(
+                    "missing_keywords",
+                    [],
+                )
+
+                self.ai_ats_suggestions = data.get(
+                    "ats_suggestions",
+                    [],
+                )
+
+                self.recruiter_advice = data.get(
+                    "recruiter_advice",
+                    "",
+                )
+
+            except Exception:
+
+                self.resume_score = "N/A"
+                self.resume_score_value = 0
+
+            return rx.toast.success(
+                "Resume analysis completed!"
+            )
+
+        finally:
+
+            self.is_generating_review = False
+            self.review_status = ""

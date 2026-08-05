@@ -22,6 +22,8 @@ def generate_text(prompt: str) -> str:
             model="gemini-3.5-flash",
             contents=prompt,
         )
+        
+        print(response.text)
 
         return response.text
 
@@ -159,9 +161,11 @@ def analyze_resume(
 ) -> str:
 
     prompt = f"""
-You are an expert ATS recruiter.
+You are an experienced ATS recruiter and senior hiring manager.
 
-Analyze this resume.
+Analyze the following resume for an entry-level software engineering role.
+
+Candidate Information
 
 Name:
 {full_name}
@@ -169,7 +173,7 @@ Name:
 Professional Title:
 {professional_title}
 
-Summary:
+Professional Summary:
 {summary}
 
 Education:
@@ -184,21 +188,38 @@ Experience:
 Projects:
 {projects}
 
-Provide:
+Return ONLY valid JSON.
 
-1. Resume Score (0-100)
+Do not include markdown.
+Do not include ```json.
+Do not include explanations.
 
-2. Strengths
+Return this exact structure:
 
-3. Weaknesses
-
-4. ATS Suggestions
-
-5. Recruiter Advice
-
-Do not invent information.
-
-Return only the analysis.
+{{
+  "resume_score": 0,
+  "overall_summary": "",
+  "strengths": [
+    "",
+    "",
+    ""
+  ],
+  "improvements": [
+    "",
+    "",
+    ""
+  ],
+  "missing_keywords": [
+    "",
+    "",
+    ""
+  ],
+  "ats_suggestions": [
+    "",
+    "",
+    ""
+  ],
+  "recruiter_advice": ""
+}}
 """
-
     return generate_text(prompt)

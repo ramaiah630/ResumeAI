@@ -1,7 +1,7 @@
 import reflex as rx
 from ..resume_state import ResumeState
 from ..components.copy_button import copy_button
-
+from ..components.ai_loading_card import ai_loading_card
 
 def cover_letter() -> rx.Component:
     return rx.center(
@@ -21,10 +21,21 @@ def cover_letter() -> rx.Component:
             ),
 
             rx.button(
-                "✨ Generate Cover Letter",
+                rx.cond(
+                    ResumeState.is_generating_cover_letter,
+                    "⏳ Generating...",
+                    "✨ Generate Cover Letter",
+                ),
                 on_click=ResumeState.generate_cover_letter,
                 color_scheme="green",
                 width="300px",
+                disabled=ResumeState.is_generating_cover_letter,
+            ),
+            rx.cond(
+                ResumeState.is_generating_cover_letter,
+                ai_loading_card(
+                    ResumeState.cover_letter_status,
+                ),
             ),
 
             rx.vstack(

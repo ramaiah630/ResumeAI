@@ -1,6 +1,9 @@
 import reflex as rx
 from ..resume_state import ResumeState
 from ..components.copy_button import copy_button
+from ..components.form_sections.personal_section import personal_section
+from ..components.form_sections.summary_section import summary_section
+from ..components.ai_loading_card import ai_loading_card
 
 # ==========================
 # Constants
@@ -74,63 +77,14 @@ def resume_form() -> rx.Component:
             # ==========================
             # Personal Information
             # ==========================
-            form_heading("Personal Information"),
 
-            rx.input(
-                placeholder="Full Name",
-                value=ResumeState.full_name,
-                on_change=ResumeState.set_full_name,
-                width=FORM_WIDTH,
-            ),
-
-            rx.input(
-                placeholder="Email Address",
-                value=ResumeState.email,
-                on_change=ResumeState.set_email,
-                width=FORM_WIDTH,
-            ),
-
-            rx.input(
-                placeholder="Phone Number",
-                value=ResumeState.phone,
-                on_change=ResumeState.set_phone,
-                width=FORM_WIDTH,
-            ),
-
-            rx.input(
-                placeholder="Professional Title",
-                value=ResumeState.professional_title,
-                on_change=ResumeState.set_professional_title,
-                width=FORM_WIDTH,
-            ),
+            personal_section(),
 
             # ==========================
             # Professional Summary
             # ==========================
-            form_heading("Professional Summary"),
-
-            rx.text_area(
-                placeholder="Write a short professional summary...",
-                value=ResumeState.summary,
-                on_change=ResumeState.set_summary,
-                width=FORM_WIDTH,
-                height="120px",
-            ),
-
-            rx.hstack(
-
-                rx.button(
-                    "✨ Generate AI Summary",
-                    on_click=ResumeState.generate_ai_summary,
-                    color_scheme="green",
-                ),
-
-                copy_button(
-                    ResumeState.summary,
-                ),
-
-                spacing="3",
-            ),
+            
+            summary_section(),
 
             # ==========================
             # Education
@@ -191,12 +145,24 @@ def resume_form() -> rx.Component:
                 height="120px",
             ),
             rx.button(
-                "✨ Improve with AI",
+                rx.cond(
+                    ResumeState.is_generating_experience,
+                    "⏳ Analyzing...",
+                    "✨ Improve with AI",
+                ),
                 on_click=ResumeState.improve_experience,
                 color_scheme="green",
                 width="250px",
+                disabled=ResumeState.is_generating_experience,
             ),
 
+            rx.cond(
+                ResumeState.is_generating_experience,
+                ai_loading_card(
+                    ResumeState.experience_status,
+                ),
+            ),
+            
             rx.cond(
                 ResumeState.improved_experience != "",
                 rx.vstack(
