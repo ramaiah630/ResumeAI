@@ -102,18 +102,93 @@ def resume_review() -> rx.Component:
                         width="900px",
                         padding="2em",
                     ),
-
-                    # Analysis
                     rx.card(
+                        rx.vstack(
+                            rx.heading(
+                                "✅ Strengths",
+                                size="5",
+                            ),
 
-                        rx.text(
-                            ResumeState.resume_review,
-                            white_space="pre-wrap",
+                            rx.divider(),
+
+                            rx.foreach(
+
+                                ResumeState.strengths,
+                                lambda item: rx.text(
+                                "• " + item,
+                                ),
+                            ),
+
+                            spacing="3",
+                            align="start",
+                            width="100%",
                         ),
 
                         width="900px",
                         padding="2em",
                     ),
+                    rx.card(
+                        rx.vstack(
+                            rx.heading(
+                                "⚠️ Improvements",
+                                size="5",
+                            ),
+
+                            rx.divider(),
+
+                            rx.foreach(
+
+                                ResumeState.improvements,
+                                lambda item: rx.text(
+                                "• " + item,
+                                ),
+                            ),
+
+                            spacing="3",
+                            align="start",
+                            width="100%",
+                        ),
+
+                        width="900px",
+                        padding="2em",
+                    ),
+                    rx.card(
+                        rx.vstack(
+                            rx.heading(
+                                "🎯 Missing Keywords",
+                                size="5",
+                            ),
+
+                            rx.divider(),
+
+                            rx.flex(
+
+                                rx.foreach(
+
+                                    ResumeState.missing_keywords,
+
+                                    lambda keyword: rx.badge(
+                                        keyword,
+                                        color_scheme="purple",
+                                        variant="soft",
+                                        size="2",
+                                    ),
+                                ),
+
+                                wrap="wrap",
+                                spacing="2",
+                            ),
+
+                            spacing="3",
+                            align="start",
+                            width="100%",
+                        ),
+
+                        width="900px",
+                        padding="2em",
+                    ),
+
+                    # Analysis
 
                     spacing="6",
                     align="center",
@@ -124,5 +199,5 @@ def resume_review() -> rx.Component:
             padding="3em",
         ),
 
-        width="100%",
+        width="100%", 
     )
