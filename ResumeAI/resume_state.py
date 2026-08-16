@@ -524,38 +524,7 @@ class ResumeState(rx.State):
 
 
     def export_pdf(self):
-        """Generate a PDF from the current resume data."""
-
-        resume_data = {
-        "full_name": self.full_name,
-        "email": self.email,
-        "phone": self.phone,
-        "summary": self.summary,
-        "education_entries": self.education_entries,
-        "skills": self.skills,
-        "company": self.company,
-        "job_title": self.job_title,
-        "duration": self.duration,
-        "experience_description": self.experience_description,
-        "experiences": self.experiences,
-        "project_title": self.project_title,
-        "project_technologies": self.project_technologies,
-        "project_description": self.project_description,
-        "project_github": self.project_github,
-        "certification_name": self.certification_name,
-        "certification_organization": self.certification_organization,
-        "certification_issue_date": self.certification_issue_date,
-        "certification_credential_id": self.certification_credential_id,
-        "languages": self.languages,
-        }
-
-        generate_resume_pdf(resume_data)
-
-        return rx.toast.success("PDF generated successfully!")
-
-
-    def export_docx(self):
-        """Generate a DOCX from the current resume data."""
+        """Generate and download the current resume as a PDF."""
 
         resume_data = {
             "full_name": self.full_name,
@@ -564,25 +533,101 @@ class ResumeState(rx.State):
             "summary": self.summary,
             "education_entries": self.education_entries,
             "skills": self.skills,
+
+            # Old Experience fields
             "company": self.company,
             "job_title": self.job_title,
             "duration": self.duration,
             "experience_description": self.experience_description,
+
+            # Multiple Experiences
             "experiences": self.experiences,
+
+            # Projects
             "project_title": self.project_title,
             "project_technologies": self.project_technologies,
             "project_description": self.project_description,
             "project_github": self.project_github,
+
+            # Certifications
             "certification_name": self.certification_name,
             "certification_organization": self.certification_organization,
             "certification_issue_date": self.certification_issue_date,
             "certification_credential_id": self.certification_credential_id,
+
+            # Languages
             "languages": self.languages,
         }
 
-        generate_resume_docx(resume_data)
+        output_path = generate_resume_pdf(
+            resume_data,
+            filename="generated_resume.pdf",
+        )
 
-        return rx.toast.success("DOCX generated successfully!")
+        with open(
+            output_path,
+            "rb",
+        ) as file:
+
+            file_data = file.read()
+
+        return rx.download(
+            data=file_data,
+            filename="generated_resume.pdf",
+        )
+
+
+    def export_docx(self):
+        """Generate and download the current resume as a DOCX."""
+
+        resume_data = {
+            "full_name": self.full_name,
+            "email": self.email,
+            "phone": self.phone,
+            "summary": self.summary,
+            "education_entries": self.education_entries,
+            "skills": self.skills,
+
+            # Old Experience fields
+            "company": self.company,
+            "job_title": self.job_title,
+            "duration": self.duration,
+            "experience_description": self.experience_description,
+
+            # Multiple Experiences
+            "experiences": self.experiences,
+
+            # Projects
+            "project_title": self.project_title,
+            "project_technologies": self.project_technologies,
+            "project_description": self.project_description,
+            "project_github": self.project_github,
+
+            # Certifications
+            "certification_name": self.certification_name,
+            "certification_organization": self.certification_organization,
+            "certification_issue_date": self.certification_issue_date,
+            "certification_credential_id": self.certification_credential_id,
+
+            # Languages
+            "languages": self.languages,
+        }
+
+        output_path = generate_resume_docx(
+            resume_data,
+        )
+
+        with open(
+            output_path,
+            "rb",
+        ) as file:
+
+            file_data = file.read()
+
+        return rx.download(
+            data=file_data,
+            filename="generated_resume.docx",
+        )
 
 
     def generate_ai_summary(self):
