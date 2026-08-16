@@ -1,6 +1,9 @@
 import reflex as rx
+
 from ..resume_state import ResumeState
 from ..components.ai_loading_card import ai_loading_card
+from ..components.review_card import review_card
+from ..components.score_card import score_card
 
 
 def resume_review() -> rx.Component:
@@ -29,6 +32,7 @@ def resume_review() -> rx.Component:
                 width="250px",
                 disabled=ResumeState.is_generating_review,
             ),
+
             rx.cond(
                 ResumeState.is_generating_review,
                 ai_loading_card(
@@ -42,124 +46,81 @@ def resume_review() -> rx.Component:
 
                 rx.vstack(
 
-                    # Resume Score Card
-                    rx.card(
+                    # ---------------- Row 1 ----------------
 
-                        rx.vstack(
+                    rx.hstack(
 
-                            rx.heading(
-                                "Resume Score",
-                                size="6",
-                            ),
+                        score_card(),
 
-                            rx.heading(
-                                ResumeState.resume_score,
-                                size="9",
-                                color=ResumeState.resume_score_color,
-                            ),
+                        review_card(
 
-                             rx.progress(
-                                value=ResumeState.resume_score_value,
-                                max=100,
-                                width="100%",
-                                color_scheme=ResumeState.resume_score_color,
-                            ),
-
-                            rx.text(
-                                "AI-powered ATS analysis",
-                                color="gray",
-                            ),
-
-                            spacing="4",
-                            align="center",
-                            width="100%",
-                        ),
-
-                        width="400px",
-                        padding="2em",
-                    ),
-
-
-                    rx.card(
-                        rx.vstack(
-                            rx.heading(
-                                "📝 Overall Summary",
-                                size="5",
-                            ),
-
-                            rx.divider(),
+                            "📝 Overall Summary",
 
                             rx.text(
                                 ResumeState.overall_summary,
                                 white_space="pre-wrap",
                             ),
-
-                            spacing="3",
-                            align="start",
-                            width="100%",
                         ),
 
-                        width="900px",
-                        padding="2em",
+                        spacing="6",
+                        width="100%",
+                        align="stretch",
                     ),
-                    rx.card(
-                        rx.vstack(
-                            rx.heading(
-                                "✅ Strengths",
-                                size="5",
-                            ),
 
-                            rx.divider(),
+                    # ---------------- Row 2 ----------------
 
-                            rx.foreach(
+                    rx.hstack(
 
-                                ResumeState.strengths,
-                                lambda item: rx.text(
-                                "• " + item,
+                        review_card(
+
+                            "✅ Strengths",
+
+                            rx.vstack(
+
+                                rx.foreach(
+                                    ResumeState.strengths,
+                                    lambda item: rx.text(
+                                        "• " + item,
+                                    ),
                                 ),
-                            ),
 
-                            spacing="3",
-                            align="start",
-                            width="100%",
+                                spacing="2",
+                                align="start",
+                                width="100%",
+                            ),
                         ),
 
-                        width="900px",
-                        padding="2em",
-                    ),
-                    rx.card(
-                        rx.vstack(
-                            rx.heading(
-                                "⚠️ Improvements",
-                                size="5",
-                            ),
+                        review_card(
 
-                            rx.divider(),
+                            "⚠️ Improvements",
 
-                            rx.foreach(
+                            rx.vstack(
 
-                                ResumeState.improvements,
-                                lambda item: rx.text(
-                                "• " + item,
+                                rx.foreach(
+                                    ResumeState.improvements,
+                                    lambda item: rx.text(
+                                        "• " + item,
+                                    ),
                                 ),
-                            ),
 
-                            spacing="3",
-                            align="start",
-                            width="100%",
+                                spacing="2",
+                                align="start",
+                                width="100%",
+                            ),
                         ),
 
-                        width="900px",
-                        padding="2em",
+                        spacing="6",
+                        width="100%",
+                        align="stretch",
                     ),
-                    rx.card(
-                        rx.vstack(
-                            rx.heading(
-                                "🎯 Missing Keywords",
-                                size="5",
-                            ),
 
-                            rx.divider(),
+                    # ---------------- Row 3 ----------------
+
+                    rx.hstack(
+
+                        review_card(
+
+                            "🎯 Missing Keywords",
 
                             rx.flex(
 
@@ -178,26 +139,55 @@ def resume_review() -> rx.Component:
                                 wrap="wrap",
                                 spacing="2",
                             ),
-
-                            spacing="3",
-                            align="start",
-                            width="100%",
                         ),
 
-                        width="900px",
-                        padding="2em",
+                        review_card(
+
+                            "💡 ATS Suggestions",
+
+                            rx.vstack(
+
+                                rx.foreach(
+                                    ResumeState.ai_ats_suggestions,
+                                    lambda item: rx.text(
+                                        "• " + item,
+                                    ),
+                                ),
+
+                                spacing="2",
+                                align="start",
+                                width="100%",
+                            ),
+                        ),
+
+                        spacing="6",
+                        width="100%",
+                        align="stretch",
                     ),
 
-                    # Analysis
+                    # ---------------- Row 4 ----------------
+
+                    review_card(
+
+                        "👨‍💼 Recruiter Advice",
+
+                        rx.text(
+                            ResumeState.recruiter_advice,
+                            white_space="pre-wrap",
+                        ),
+                    ),
 
                     spacing="6",
-                    align="center",
+                    width="100%",
+                    align="stretch",
                 ),
             ),
 
             spacing="6",
             padding="3em",
+            width="100%",
+            max_width="1400px",
         ),
 
-        width="100%", 
+        width="100%",
     )

@@ -1,9 +1,9 @@
 import reflex as rx
+
 from ...resume_state import ResumeState
 
 
 def section_heading(title: str) -> rx.Component:
-    """Reusable section heading."""
     return rx.heading(
         title,
         size="4",
@@ -13,8 +13,10 @@ def section_heading(title: str) -> rx.Component:
     )
 
 
-def preview_text(value, placeholder) -> rx.Component:
-    """Show placeholder when value is empty."""
+def preview_text(
+    value,
+    placeholder: str,
+) -> rx.Component:
     return rx.text(
         rx.cond(
             value != "",
@@ -24,18 +26,19 @@ def preview_text(value, placeholder) -> rx.Component:
         white_space="pre-wrap",
     )
 
+
 def classic_template() -> rx.Component:
     return rx.card(
-        rx.box(
-            rx.vstack(
 
-               
+        rx.box(
+
+            rx.vstack(
 
                 # ==========================
                 # Header
                 # ==========================
+
                 rx.heading(
-                    
                     rx.cond(
                         ResumeState.full_name != "",
                         ResumeState.full_name,
@@ -54,12 +57,13 @@ def classic_template() -> rx.Component:
                         "Professional Title",
                     ),
                     font_size="1.2em",
-                    color="Black",
+                    color="black",
                     text_align="center",
                     width="100%",
                 ),
 
                 rx.hstack(
+
                     preview_text(
                         ResumeState.email,
                         "email@example.com",
@@ -78,110 +82,267 @@ def classic_template() -> rx.Component:
                 # ==========================
                 # Summary
                 # ==========================
-                section_heading("Professional Summary"),
 
-                preview_text(
-                    ResumeState.summary,
-                    "Write a short professional summary...",
+                rx.cond(
+                    ResumeState.summary != "",
+                    rx.vstack(
+                        section_heading("Professional Summary"),
+                        rx.text(
+                            ResumeState.summary,
+                            white_space="pre-wrap",
+                        ),
+                        width="100%",
+                        align="start",
+                    ),
                 ),
 
                 # ==========================
                 # Education
                 # ==========================
-                section_heading("Education"),
 
-                preview_text(
-                    ResumeState.education,
-                    "Bachelor of Technology",
+                rx.cond(
+                    ResumeState.education_entries.length() > 0,
+                    rx.vstack(
+
+                        section_heading("Education"),
+
+                        rx.foreach(
+                            ResumeState.education_entries,
+
+                            lambda entry: rx.vstack(
+
+                                # Institution
+                                rx.cond(
+                                    entry["institution"] != "",
+                                    rx.text(
+                                        entry["institution"],
+                                        #font_weight="bold",
+                                        font_size="1.05em",
+                                    ),
+                                ),
+
+                                # Location
+                                rx.cond(
+                                    entry["location"] != "",
+                                    rx.text(
+                                        entry["location"],
+                                        #color="gray",
+                                    ),
+                                ),
+
+                                # Years + Qualification + Course + Grade
+                                rx.cond(
+                                    (
+                                        (entry["start_year"] != "")
+                                        | (entry["end_year"] != "")
+                                        | (entry["qualification"] != "")
+                                        | (entry["course"] != "")
+                                        | (entry["grade"] != "")
+                                    ),
+
+                                    rx.text(
+                                        entry["start_year"]
+                                        + rx.cond(
+                                            (
+                                                (entry["start_year"] != "")
+                                                & (entry["end_year"] != "")
+                                            ),
+                                            " – ",
+                                            "",
+                                        )
+                                        + entry["end_year"]
+                                        + rx.cond(
+                                            (
+                                                (entry["qualification"] != "")
+                                                | (entry["course"] != "")
+                                            ),
+                                            " | ",
+                                            "",
+                                        )
+                                        + entry["qualification"]
+                                        + rx.cond(
+                                            (
+                                                (entry["qualification"] != "")
+                                                & (entry["course"] != "")
+                                            ),
+                                            " in ",
+                                            "",
+                                        )
+                                        + entry["course"]
+                                        + rx.cond(
+                                            entry["grade"] != "",
+                                            " | " + entry["grade"],
+                                            "",
+                                        ),
+                                        white_space="pre-wrap",
+                                    ),
+                                ),
+
+                                spacing="1",
+                                width="100%",
+                                align="start",
+                                padding_bottom="10px",
+                            ),
+                        ),
+
+                        width="100%",
+                        align="start",
+                        spacing="3",
+                    ),
                 ),
+
+                
 
                 # ==========================
                 # Skills
                 # ==========================
-                section_heading("Skills"),
 
-                rx.flex(
-                    rx.foreach(
-                        ResumeState.skills_list,
-                        lambda skill: rx.badge(
-                            skill,
-                            variant="soft",
-                            radius="full",
+                rx.cond(
+                    ResumeState.skills_list.length() > 0,
+                    rx.vstack(
+                        section_heading("Skills"),
+
+                        rx.flex(
+                            rx.foreach(
+                                ResumeState.skills_list,
+                                lambda skill: rx.badge(
+                                    skill,
+                                    variant="soft",
+                                    radius="full",
+                                ),
+                            ),
+                            wrap="wrap",
+                            spacing="2",
                         ),
+
+                        width="100%",
+                        align="start",
                     ),
-                    wrap="wrap",
-                    spacing="2",
                 ),
 
                 # ==========================
                 # Experience
                 # ==========================
-                section_heading("Experience"),
 
-                rx.text(
-                    rx.cond(
-                        ResumeState.job_title != "",
-                        ResumeState.job_title,
-                        "Software Engineer",
+                rx.cond(
+                    ResumeState.experiences.length() > 0,
+
+                    rx.vstack(
+
+                        section_heading("Experience"),
+
+                        rx.foreach(
+                            ResumeState.experiences,
+
+                            lambda experience: rx.vstack(
+
+                                # Company
+                                rx.cond(
+                                    experience["company"] != "",
+                                    rx.text(
+                                        experience["company"],
+                                        font_weight="bold",
+                                    ),
+                                ),
+                                # Job Title
+                                rx.cond(
+                                    experience["job_title"] != "",
+                                    rx.text(
+                                        experience["job_title"],
+                                        #font_weight="bold",
+                                    ),
+                                ),
+
+                                # Duration
+                                rx.cond(
+                                    experience["duration"] != "",
+                                    rx.text(
+                                        experience["duration"],
+                                        #color="gray",
+                                    ),
+                                ),
+
+                                # Description
+                                rx.cond(
+                                    experience["description"] != "",
+                                    rx.text(
+                                        experience["description"],
+                                        white_space="pre-wrap",
+                                    ),
+                                ),
+
+                                width="100%",
+                                align="start",
+                                spacing="2",
+                                padding_bottom="12px",
+                            ),
+                        ),
+
+                        align="start",
+                        spacing="3",
+                        width="100%",
                     ),
-                    font_weight="bold",
                 ),
 
-                preview_text(
-                    ResumeState.company,
-                    "ABC Technologies",
-                ),
-
-                rx.text(
-                    rx.cond(
-                        ResumeState.duration != "",
-                        ResumeState.duration,
-                        "Jan 2025 - Present",
-                    ),
-                    color="gray",
-                ),
-
-                preview_text(
-                    ResumeState.experience_description,
-                    "Worked on AI-powered web applications and automation tools.",
-                ),
-
+                
                 # ==========================
                 # Projects
                 # ==========================
 
-                section_heading("Projects"),
+                rx.cond(
+                    (ResumeState.project_title != "")
+                    | (ResumeState.project_description != ""),
 
-                rx.text(
-                    rx.cond(
-                        ResumeState.project_title != "",
-                        ResumeState.project_title,
-                        "AI Resume Builder",
+                    rx.vstack(
+
+                        section_heading("Projects"),
+
+                        rx.cond(
+                            ResumeState.project_title != "",
+                            rx.text(
+                                ResumeState.project_title,
+                                font_weight="bold",
+                            ),
+                        ),
+
+                        rx.cond(
+                            ResumeState.project_technologies != "",
+                            rx.text(
+                                ResumeState.project_technologies,
+                            ),
+                        ),
+
+                        rx.cond(
+                            ResumeState.project_github != "",
+                            rx.text(
+                                ResumeState.project_github,
+                                color="gray",
+                            ),
+                        ),
+
+                        rx.cond(
+                            ResumeState.project_description != "",
+                            rx.text(
+                                ResumeState.project_description,
+                                white_space="pre-wrap",
+                            ),
+                        ),
+
+                        align="start",
+                        spacing="2",
+                        width="100%",
                     ),
-                    font_weight="bold",
-                ),
-
-                preview_text(
-                    ResumeState.project_technologies,
-                    "Python • Reflex • Gemini AI",
-                ),
-
-                preview_text(
-                    ResumeState.project_github,
-                    "https://github.com/username/resumeai",
-                ),
-
-                preview_text(
-                    ResumeState.project_description,
-                    "An AI-powered resume builder with live preview and PDF export.",
                 ),
 
                 # ==========================
                 # Certifications
                 # ==========================
+
                 rx.cond(
                     ResumeState.certification_name != "",
+
                     rx.vstack(
+
                         section_heading("Certifications"),
 
                         rx.text(
@@ -189,20 +350,25 @@ def classic_template() -> rx.Component:
                             font_weight="bold",
                         ),
 
-                        preview_text(
-                            ResumeState.certification_organization,
-                            "Issuing Organization",
+                        rx.cond(
+                            ResumeState.certification_organization != "",
+                            rx.text(
+                                ResumeState.certification_organization,
+                            ),
                         ),
 
-                        preview_text(
-                            ResumeState.certification_issue_date,
-                            "Issue Date",
+                        rx.cond(
+                            ResumeState.certification_issue_date != "",
+                            rx.text(
+                                ResumeState.certification_issue_date,
+                            ),
                         ),
 
                         rx.cond(
                             ResumeState.certification_credential_id != "",
                             rx.text(
-                                f"Credential ID: {ResumeState.certification_credential_id}",
+                                "Credential ID: "
+                                + ResumeState.certification_credential_id,
                                 color="gray",
                             ),
                         ),
@@ -213,93 +379,34 @@ def classic_template() -> rx.Component:
                     ),
                 ),
 
-
                 # ==========================
                 # Languages
                 # ==========================
 
                 rx.cond(
                     ResumeState.languages != "",
-                        rx.vstack(
-                            section_heading("Languages"),
+
+                    rx.vstack(
+
+                        section_heading("Languages"),
 
                         rx.flex(
                             rx.foreach(
                                 ResumeState.languages_list,
                                 lambda language: rx.badge(
-                                language,
-                                variant="soft",
-                                radius="full",
+                                    language,
+                                    variant="soft",
+                                    radius="full",
+                                ),
                             ),
+                            wrap="wrap",
+                            spacing="2",
                         ),
-                        wrap="wrap",
-                        spacing="2",
-                    ),
 
                         align="start",
                         spacing="2",
                         width="100%",
-                ),
-            ),       
-
-
-                # ==========================
-                # ATS Score
-                # ==========================
-                section_heading("ATS Score"),
-
-                rx.progress(
-                    value=ResumeState.ats_score,
-                    width="100%",
-                ),
-
-                rx.text(
-                    ResumeState.ats_score,
-                    " % Match",
-                    color_scheme="green",
-                    font_weight="bold",
-                ),
-
-                # ==========================
-                # ATS Suggestions
-                # ==========================
-                section_heading("ATS Suggestions"),
-
-                rx.vstack(
-
-                    rx.cond(
-                        ResumeState.summary == "",
-                        rx.text("• Add a professional summary.", color="orange"),
                     ),
-
-                    rx.cond(
-                        ResumeState.skills == "",
-                        rx.text("• Add your skills.", color="orange"),
-                    ),
-
-                    rx.cond(
-                        ResumeState.company == "",
-                        rx.text("• Add work experience.", color="orange"),
-                    ),
-
-                    rx.cond(
-                        ResumeState.project_title == "",
-                        rx.text("• Add at least one project.", color="orange"),
-                    ),
-
-                    rx.cond(
-                        ResumeState.certification_name == "",
-                        rx.text("• Add certifications.", color="orange"),
-                    ),
-
-                    rx.cond(
-                        ResumeState.languages == "",
-                        rx.text("• Add languages you know.", color="orange"),
-                    ),
-
-                    align="start",
-                    spacing="2",
-                    width="100%",
                 ),
 
                 spacing="5",
@@ -308,7 +415,7 @@ def classic_template() -> rx.Component:
 
             width="210mm",
             min_height="297mm",
-            bg="white",
+            background="white",
             color="black",
             padding="40px",
             border_radius="8px",

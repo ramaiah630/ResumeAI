@@ -3,6 +3,7 @@ import reflex as rx
 
 def hero() -> rx.Component:
     return rx.center(
+
         rx.vstack(
 
             rx.badge(
@@ -13,18 +14,17 @@ def hero() -> rx.Component:
             ),
 
             rx.heading(
-                "Create ATS-Friendly Resumes with AI",
+                "Build Smarter Resumes with AI",
                 size="9",
                 text_align="center",
             ),
 
             rx.text(
-                "Build professional resumes in minutes using AI. "
-                "Generate cover letters, analyze ATS score, match job descriptions, "
-                "review your resume and export to PDF or DOCX.",
+                "Create ATS-friendly resumes, generate professional cover letters, "
+                "analyze resume quality, match jobs, and export to PDF or DOCX — all powered by Gemini AI.",
                 text_align="center",
-                max_width="800px",
                 color="gray",
+                max_width="850px",
                 size="4",
             ),
 
@@ -55,52 +55,35 @@ def hero() -> rx.Component:
                 justify="center",
             ),
 
-            rx.flex(
+            rx.hstack(
 
                 rx.badge(
-                    "✨ Gemini AI",
+                    "⚡ 10+ AI Features",
                     color_scheme="purple",
                     variant="soft",
                 ),
 
                 rx.badge(
-                    "🎯 ATS Score",
+                    "📄 ATS Optimized",
                     color_scheme="green",
                     variant="soft",
                 ),
 
                 rx.badge(
-                    "📄 PDF Export",
+                    "🤖 Gemini AI",
                     color_scheme="blue",
                     variant="soft",
                 ),
 
                 rx.badge(
-                    "📘 DOCX Export",
+                    "📥 PDF & DOCX",
                     color_scheme="orange",
-                    variant="soft",
-                ),
-
-                rx.badge(
-                    "⚡ Live Preview",
-                    color_scheme="cyan",
-                    variant="soft",
-                ),
-
-                rx.badge(
-                    "💼 Job Matcher",
-                    color_scheme="red",
-                    variant="soft",
-                ),
-
-                rx.badge(
-                    "✉️ Cover Letter",
-                    color_scheme="yellow",
                     variant="soft",
                 ),
 
                 spacing="3",
                 justify="center",
+                wrap="wrap",
             ),
 
             spacing="7",
@@ -109,7 +92,7 @@ def hero() -> rx.Component:
             width="100%",
         ),
 
-        min_height="75vh",
-        padding="4em",
+        min_height="80vh",
         width="100%",
+        padding="4em",
     )

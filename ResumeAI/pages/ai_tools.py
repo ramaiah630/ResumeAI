@@ -1,36 +1,69 @@
 import reflex as rx
 
 
-def tool_card(title: str, description: str, route: str) -> rx.Component:
+def tool_card(
+    emoji: str,
+    title: str,
+    description: str,
+    route: str,
+) -> rx.Component:
+
     return rx.card(
+
         rx.vstack(
+
+            rx.text(
+                emoji,
+                font_size="3em",
+            ),
 
             rx.heading(
                 title,
-                size="5",
+                size="6",
+                text_align="center",
             ),
 
             rx.text(
                 description,
                 color="gray",
+                text_align="center",
             ),
+
+            rx.spacer(),
 
             rx.button(
                 "Open",
                 on_click=rx.redirect(route),
+                color_scheme="purple",
                 width="100%",
             ),
 
-            spacing="3",
-            align="start",
+            spacing="4",
+            align="center",
+            width="100%",
+            height="100%",
         ),
 
         width="320px",
-        padding="1.5em",
+        min_height="320px",
+
+        padding="2em",
+
+        border_radius="18px",
+
+        border="1px solid",
+        border_color=rx.color("gray", 4),
+
+        background=rx.color("gray", 1),
+
+        box_shadow="0 8px 25px rgba(0,0,0,0.08)",
+
+        transition="all 0.25s ease",
     )
 
 
 def ai_tools() -> rx.Component:
+
     return rx.center(
 
         rx.vstack(
@@ -41,39 +74,46 @@ def ai_tools() -> rx.Component:
             ),
 
             rx.text(
-                "AI-powered tools to improve your resume and job applications.",
+                "Choose an AI-powered tool to improve your resume and job applications.",
                 color="gray",
+                text_align="center",
+                max_width="700px",
             ),
 
-            rx.grid(
+            rx.hstack(
 
                 tool_card(
-                    "🎯 Job Matcher",
-                    "Compare your resume with a job description.",
-                    "/job-match",
+                    "📊",
+                    "Resume Review",
+                    "Receive ATS analysis, recruiter feedback, strengths, improvements and missing keywords.",
+                    "/resume-review",
                 ),
 
                 tool_card(
-                    "✉️ Cover Letter",
-                    "Generate personalized cover letters with Gemini AI.",
+                    "✉️",
+                    "Cover Letter",
+                    "Generate professional, personalized cover letters using Gemini AI.",
                     "/cover-letter",
                 ),
 
                 tool_card(
-                    "📊 Resume Review",
-                    "Get AI feedback on your complete resume.",
-                    "/resume-review",
+                    "🎯",
+                    "Job Matcher",
+                    "Compare your resume with a job description and discover missing skills.",
+                    "/job-match",
                 ),
 
-                columns="3",
                 spacing="6",
+                wrap="wrap",
+                justify="center",
                 width="100%",
             ),
 
-            spacing="6",
+            spacing="7",
+            align="center",
             width="100%",
-            max_width="1100px",
-            padding="2em",
+            max_width="1200px",
+            padding="3em",
         ),
 
         width="100%",

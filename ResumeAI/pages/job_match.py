@@ -1,5 +1,6 @@
 import reflex as rx
 from ..resume_state import ResumeState
+from ..components.ai_loading_card import ai_loading_card
 
 
 def job_match() -> rx.Component:
@@ -25,11 +26,24 @@ def job_match() -> rx.Component:
             ),
 
             rx.button(
-                "Analyze Resume",
+                rx.cond(
+                    ResumeState.is_analyzing_job,
+                    "⏳ Analyzing...",
+                    "🔎 Analyze Resume",
+                ),
                 on_click=ResumeState.analyze_job_description,
                 color_scheme="blue",
                 width="250px",
+                disabled=ResumeState.is_analyzing_job,
             ),
+
+            rx.cond(
+                ResumeState.is_analyzing_job,
+                ai_loading_card(
+                    ResumeState.job_match_status,
+                ),
+            ),
+
 
             rx.divider(width="800px"),
 
@@ -100,7 +114,7 @@ def job_match() -> rx.Component:
                 wrap="wrap",
                 spacing="2",
             ),
-            
+
             rx.heading(
                 "Suggestions",
                 size="5",
